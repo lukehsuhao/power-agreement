@@ -107,7 +107,17 @@ final class Plugin {
 	 * @return list<string>
 	 */
 	private function registerCheckoutModule(): array {
-		// Filled in during stages 4 & 5.
-		return array();
+		add_action(
+			'init',
+			static function (): void {
+				$repo      = new \PowerAgreement\Settings\SettingsRepository();
+				$validator = new \PowerAgreement\Checkout\ConsentValidator( $repo );
+				$writer    = new \PowerAgreement\Order\OrderMetaWriter( $repo );
+
+				( new \PowerAgreement\Checkout\ClassicCheckout( $repo, $validator, $writer ) )->register();
+			},
+			0
+		);
+		return array( 'classic_checkout' );
 	}
 }

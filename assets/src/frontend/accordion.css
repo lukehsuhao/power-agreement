@@ -1,0 +1,78 @@
+/**
+ * Power Agreement — Classic + Block accordion shared styles.
+ *
+ * Inherits color / typography from the host theme. Only structural
+ * styles (border, spacing, transition) are set here.
+ */
+
+.power-agreement {
+	margin: 1.25em 0;
+	border: 1px solid currentColor;
+	border-radius: 4px;
+	padding: 0;
+	background: transparent;
+	color: inherit;
+}
+
+.power-agreement__toggle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0.75em 1em;
+	background: transparent;
+	border: 0;
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+	text-align: left;
+}
+
+.power-agreement__toggle:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+.power-agreement__title {
+	font-weight: 600;
+}
+
+.power-agreement__chevron {
+	transition: transform 200ms ease;
+}
+
+.power-agreement__toggle[aria-expanded="true"] .power-agreement__chevron {
+	transform: rotate(180deg);
+}
+
+.power-agreement__content {
+	padding: 0 1em;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 240ms ease, padding 240ms ease;
+}
+
+.power-agreement__content.is-open {
+	padding: 0.75em 1em 1em;
+	max-height: 50vh;
+	overflow: auto;
+}
+
+.power-agreement__consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
+	padding: 0.75em 1em;
+	border-top: 1px solid currentColor;
+	cursor: pointer;
+}
+
+.power-agreement__consent input[type="checkbox"] {
+	margin-top: 0.2em;
+	flex: 0 0 auto;
+}
+
+/* Block Checkout reuses the same DOM tree but inside a React component. */
+.wp-block-power-agreement {
+	margin: 1em 0;
+}

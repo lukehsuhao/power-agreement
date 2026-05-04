@@ -81,6 +81,15 @@ export function setBlockCheckoutPage(): void {
 	if (!checkoutId) {
 		return;
 	}
-	const blockMarkup = '<!-- wp:woocommerce/checkout --><!-- /wp:woocommerce/checkout -->';
-	wpCli(`post update ${checkoutId} --post_content='${blockMarkup}'`);
+	// Use WC's full default block markup so the React app has the inner blocks
+	// it needs to hydrate. We base64-encode the PHP snippet to avoid every
+	// shell-escaping landmine (`$`, quotes, semicolons, etc.).
+	const phpCode = [
+		'$r=new ReflectionClass(WC_Install::class);',
+		'$m=$r->getMethod("get_checkout_block_content");',
+		'$m->setAccessible(true);',
+		`wp_update_post(array("ID"=>${checkoutId},"post_content"=>$m->invoke(null)));`,
+	].join('');
+	const b64 = Buffer.from(phpCode, 'utf8').toString('base64');
+	wpCli(`eval "eval(base64_decode('${b64}'));"`);
 }

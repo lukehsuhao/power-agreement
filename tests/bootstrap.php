@@ -27,9 +27,27 @@ if ( ! class_exists( '\Yoast\PHPUnitPolyfills\Autoload' ) ) {
 	exit( 1 );
 }
 
-$pa_wp_phpunit_dir = getenv( 'WP_PHPUNIT__DIR' );
-if ( ! $pa_wp_phpunit_dir || ! is_dir( $pa_wp_phpunit_dir ) ) {
+// Composer autoload installs vendor/wp-phpunit/wp-phpunit/__loaded.php which
+// overwrites WP_PHPUNIT__DIR via putenv() to point at the vendored stub. Force
+// our own resolution order: WP_PHPUNIT__DIR_OVERRIDE > /wordpress-phpunit (set
+// up by wp-env) > the vendored copy.
+$pa_override = getenv( 'WP_PHPUNIT__DIR_OVERRIDE' );
+if ( $pa_override && is_dir( $pa_override ) ) {
+	$pa_wp_phpunit_dir = $pa_override;
+} elseif ( is_dir( '/wordpress-phpunit' ) ) {
+	$pa_wp_phpunit_dir = '/wordpress-phpunit';
+} else {
 	$pa_wp_phpunit_dir = dirname( __DIR__ ) . '/vendor/wp-phpunit/wp-phpunit';
+}
+putenv( 'WP_PHPUNIT__DIR=' . $pa_wp_phpunit_dir );
+
+// Tell the wp-phpunit bootstrap exactly where our config lives, otherwise it
+// falls back to the vendored stub which expects WP_PHPUNIT__TESTS_CONFIG.
+if ( ! defined( 'WP_TESTS_CONFIG_FILE_PATH' ) ) {
+	$pa_config = dirname( __FILE__ ) . '/wp-tests-config.php';
+	if ( is_readable( $pa_config ) ) {
+		define( 'WP_TESTS_CONFIG_FILE_PATH', $pa_config );
+	}
 }
 
 $pa_load_wp = ( defined( 'POWER_AGREEMENT_LOAD_WP' ) && POWER_AGREEMENT_LOAD_WP )

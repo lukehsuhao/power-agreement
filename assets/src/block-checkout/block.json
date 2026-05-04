@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "power-agreement/agreement",
+	"version": "0.1.0",
+	"title": "Power Agreement",
+	"category": "woocommerce",
+	"description": "Collapsible agreement section with required consent checkbox shown above the place-order button on Block Checkout.",
+	"textdomain": "power-agreement",
+	"keywords": ["agreement", "consent", "checkout", "terms"],
+	"parent": ["woocommerce/checkout-fields-block"],
+	"supports": {
+		"html": false,
+		"multiple": false
+	},
+	"attributes": {
+		"lock": {
+			"type": "object",
+			"default": { "remove": true, "move": true }
+		}
+	}
+}

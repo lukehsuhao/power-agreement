@@ -29,9 +29,14 @@
         }
     },
     "scripts": {
-        "test": "phpunit --colors=always",
+        "test": [
+            "@test:unit",
+            "@test:integration"
+        ],
         "test:unit": "phpunit --colors=always --testsuite=unit",
-        "test:integration": "phpunit --colors=always --testsuite=integration",
+        "test:integration": "POWER_AGREEMENT_LOAD_WP=1 phpunit --colors=always --testsuite=integration",
+        "test:integration:hpos": "POWER_AGREEMENT_LOAD_WP=1 POWER_AGREEMENT_HPOS=on phpunit --colors=always --testsuite=integration",
+        "test:integration:legacy": "POWER_AGREEMENT_LOAD_WP=1 POWER_AGREEMENT_HPOS=off phpunit --colors=always --testsuite=integration",
         "lint": [
             "@lint:phpcs",
             "@lint:phpstan"

@@ -58,9 +58,22 @@ if ( $pa_load_wp && file_exists( $pa_wp_phpunit_dir . '/includes/functions.php' 
 				return;
 			}
 			\WC_Install::install();
-			// Some installs need this dance before tests run.
 			if ( method_exists( 'WC_Install', 'create_tables' ) ) {
 				\WC_Install::create_tables();
+			}
+
+			// Optionally toggle HPOS based on env variable so the same suite can
+			// run twice (HPOS on / off) without code duplication.
+			$hpos_mode = getenv( 'POWER_AGREEMENT_HPOS' );
+			if ( 'on' === $hpos_mode || '1' === $hpos_mode ) {
+				update_option( 'woocommerce_custom_orders_table_enabled', 'yes' );
+				update_option( 'woocommerce_feature_custom_order_tables_enabled', 'yes' );
+				if ( class_exists( '\Automattic\WooCommerce\Internal\DataStores\Orders\DataSynchronizer' ) ) {
+					update_option( 'woocommerce_custom_orders_table_data_sync_enabled', 'no' );
+				}
+			} elseif ( 'off' === $hpos_mode || '0' === $hpos_mode ) {
+				update_option( 'woocommerce_custom_orders_table_enabled', 'no' );
+				update_option( 'woocommerce_feature_custom_order_tables_enabled', 'no' );
 			}
 		}
 	);

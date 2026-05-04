@@ -16,8 +16,11 @@ fi
 
 PLUGIN_DIR=/var/www/html/wp-content/plugins/power-agreement
 
+HPOS_MODE="${HPOS:-}"
+
 docker exec \
   -e WP_PHPUNIT__TESTS_CONFIG="${PLUGIN_DIR}/tests/wp-tests-config.php" \
   -e POWER_AGREEMENT_LOAD_WP=1 \
+  -e POWER_AGREEMENT_HPOS="${HPOS_MODE}" \
   "${WP_CT}" \
   bash -c "cd ${PLUGIN_DIR} && vendor/bin/phpunit --testsuite=integration --colors=never -d 'memory_limit=512M' $*"

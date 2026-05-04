@@ -90,8 +90,17 @@ final class Plugin {
 	 * @return list<string>
 	 */
 	private function registerOrderModule(): array {
-		// Filled in during stage 3.
-		return array();
+		if ( ! is_admin() ) {
+			return array();
+		}
+		add_action(
+			'init',
+			static function (): void {
+				( new \PowerAgreement\Order\OrderAdminDisplay() )->register();
+			},
+			0
+		);
+		return array( 'order_admin_display' );
 	}
 
 	/**

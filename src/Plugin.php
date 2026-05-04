@@ -70,8 +70,20 @@ final class Plugin {
 	 * @return list<string>
 	 */
 	private function registerSettingsModule(): array {
-		// Filled in during stage 2.
-		return array();
+		if ( ! is_admin() ) {
+			return array();
+		}
+		add_action(
+			'init',
+			static function (): void {
+				$page = new \PowerAgreement\Settings\SettingsPage(
+					new \PowerAgreement\Settings\SettingsRepository()
+				);
+				$page->register();
+			},
+			0
+		);
+		return array( 'settings_page' );
 	}
 
 	/**

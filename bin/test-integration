@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# Run the integration test suite inside the wp-env tests-wordpress container.
+#
+# Usage:
+#   bin/test-integration                # all integration tests
+#   bin/test-integration --filter Foo   # forwards extra args to phpunit
+#
+set -euo pipefail
+
+WP_CT=$(docker ps --format '{{.Names}}' | grep -E 'tests-wordpress-1$' | head -1)
+if [[ -z "${WP_CT}" ]]; then
+  echo "tests-wordpress container not running. Run 'npx wp-env start' first." >&2
+  exit 1
+fi
+
+PLUGIN_DIR=/var/www/html/wp-content/plugins/power-agreement
+
+docker exec \
+  -e WP_PHPUNIT__TESTS_CONFIG="${PLUGIN_DIR}/tests/wp-tests-config.php" \
+  -e POWER_AGREEMENT_LOAD_WP=1 \
+  "${WP_CT}" \
+  bash -c "cd ${PLUGIN_DIR} && vendor/bin/phpunit --testsuite=integration --colors=never -d 'memory_limit=512M' $*"

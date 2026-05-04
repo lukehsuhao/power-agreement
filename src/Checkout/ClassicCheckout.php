@@ -59,21 +59,41 @@ final class ClassicCheckout {
 			return;
 		}
 
-		$base = defined( 'POWER_AGREEMENT_URL' ) ? POWER_AGREEMENT_URL : plugin_dir_url( dirname( __DIR__ ) );
+		$base    = defined( 'POWER_AGREEMENT_URL' ) ? POWER_AGREEMENT_URL : plugin_dir_url( dirname( __DIR__ ) );
+		$root    = defined( 'POWER_AGREEMENT_DIR' ) ? POWER_AGREEMENT_DIR : trailingslashit( dirname( __DIR__, 2 ) );
+		$css_ver = $this->assetVersion( $root . 'assets/src/frontend/accordion.css' );
+		$js_ver  = $this->assetVersion( $root . 'assets/src/frontend/accordion.js' );
 
 		wp_enqueue_style(
 			'power-agreement-frontend',
 			$base . 'assets/src/frontend/accordion.css',
 			array(),
-			\PowerAgreement\Plugin::version()
+			$css_ver
 		);
 		wp_enqueue_script(
 			'power-agreement-frontend',
 			$base . 'assets/src/frontend/accordion.js',
 			array(),
-			\PowerAgreement\Plugin::version(),
+			$js_ver,
 			true
 		);
+	}
+
+	/**
+	 * Return a cache-bustable version string for an asset.
+	 *
+	 * Falls back to the plugin version when the file is not readable so
+	 * unit/static contexts stay deterministic; otherwise prefers filemtime
+	 * which auto-busts the browser cache whenever the asset is edited.
+	 */
+	private function assetVersion( string $path ): string {
+		if ( ! is_readable( $path ) ) {
+			return \PowerAgreement\Plugin::version();
+		}
+		$mtime = filemtime( $path );
+		return false === $mtime
+			? \PowerAgreement\Plugin::version()
+			: \PowerAgreement\Plugin::version() . '.' . (string) $mtime;
 	}
 
 	public function render(): void {

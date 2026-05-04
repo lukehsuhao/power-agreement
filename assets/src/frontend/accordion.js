@@ -5,15 +5,17 @@
  *   - click on the toggle button to expand/collapse the agreement body
  *   - keeping aria-expanded and the [hidden] attribute in sync
  *
- * Survives WC's ajax fragment refreshes by re-binding any new
- * accordions after each `updated_checkout` event using event delegation
- * on the document, plus an "initialised" flag to avoid duplicates.
+ * Uses event delegation on `document` for the click handler so the
+ * accordion keeps working after WC's `updated_checkout` ajax fragment
+ * refresh replaces the order-review markup (which would otherwise
+ * orphan any directly-bound listeners). `updated_checkout` is a
+ * jQuery custom event that does not bubble to native listeners, so
+ * we never have to listen for it.
  */
 ( function () {
 	'use strict';
 
 	var TOGGLE_SELECTOR = '[data-power-agreement-toggle]';
-	var FLAG_ATTR       = 'data-power-agreement-bound';
 
 	function setExpanded( toggle, expanded ) {
 		toggle.setAttribute( 'aria-expanded', expanded ? 'true' : 'false' );
@@ -34,33 +36,15 @@
 		}
 	}
 
-	function bind( toggle ) {
-		if ( toggle.getAttribute( FLAG_ATTR ) === '1' ) {
+	document.addEventListener( 'click', function ( event ) {
+		var toggle = event.target.closest
+			? event.target.closest( TOGGLE_SELECTOR )
+			: null;
+		if ( ! toggle ) {
 			return;
 		}
-		toggle.setAttribute( FLAG_ATTR, '1' );
-		toggle.addEventListener( 'click', function ( event ) {
-			event.preventDefault();
-			var expanded = toggle.getAttribute( 'aria-expanded' ) === 'true';
-			setExpanded( toggle, ! expanded );
-		} );
-	}
-
-	function init() {
-		var toggles = document.querySelectorAll( TOGGLE_SELECTOR );
-		for ( var i = 0; i < toggles.length; i++ ) {
-			bind( toggles[ i ] );
-		}
-	}
-
-	if ( document.readyState === 'loading' ) {
-		document.addEventListener( 'DOMContentLoaded', init );
-	} else {
-		init();
-	}
-
-	// Re-bind on WC fragment refreshes.
-	document.addEventListener( 'updated_checkout', init );
-	// jQuery is the official channel, but listening to the native event covers
-	// custom themes that re-emit it on document.
+		event.preventDefault();
+		var expanded = toggle.getAttribute( 'aria-expanded' ) === 'true';
+		setExpanded( toggle, ! expanded );
+	} );
 } )();

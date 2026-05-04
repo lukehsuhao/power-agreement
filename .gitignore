@@ -1,0 +1,17 @@
+/vendor/
+/node_modules/
+/assets/build/
+/.wp-env/
+.phpunit.result.cache
+.phpunit.cache/
+.phpcs-cache
+.phpstan.cache/
+*.log
+.DS_Store
+.idea/
+.vscode/
+/coverage/
+/playwright-report/
+/test-results/
+.env
+.env.local

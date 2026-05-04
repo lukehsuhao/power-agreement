@@ -1,0 +1,28 @@
+{
+  "name": "power-agreement",
+  "version": "0.1.0",
+  "private": true,
+  "description": "WooCommerce checkout agreement consent plugin.",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "wp-scripts build --webpack-src-dir=assets/src/block-checkout --output-path=assets/build",
+    "start": "wp-scripts start --webpack-src-dir=assets/src/block-checkout --output-path=assets/build",
+    "wp-env": "wp-env",
+    "wp-env:start": "wp-env start",
+    "wp-env:stop": "wp-env stop",
+    "wp-env:destroy": "wp-env destroy",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "lint:js": "wp-scripts lint-js assets/src",
+    "format": "wp-scripts format assets/src"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "@axe-core/playwright": "^4.9.0",
+    "@wordpress/element": "^6.0.0",
+    "@wordpress/i18n": "^5.0.0",
+    "@wordpress/scripts": "^28.0.0",
+    "@wordpress/env": "^10.0.0",
+    "@wordpress/hooks": "^4.0.0"
+  }
+}

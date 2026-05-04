@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<ruleset name="Power Agreement">
+    <description>Coding standards for Power Agreement plugin.</description>
+
+    <file>power-agreement.php</file>
+    <file>uninstall.php</file>
+    <file>src</file>
+
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+    <exclude-pattern>assets/build/*</exclude-pattern>
+    <exclude-pattern>tests/*</exclude-pattern>
+
+    <arg value="ps"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+
+    <config name="testVersion" value="8.1-"/>
+    <config name="minimum_supported_wp_version" value="6.5"/>
+
+    <rule ref="WordPress-Extra">
+        <exclude name="WordPress.Files.FileName"/>
+        <exclude name="Universal.Files.SeparateFunctionsFromOO.Mixed"/>
+        <!-- Object-oriented code intentionally uses camelCase methods -->
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid"/>
+        <exclude name="WordPress.NamingConventions.ValidVariableName.PropertyNotSnakeCase"/>
+        <!-- We rely on PHP type declarations rather than doc comments. -->
+        <exclude name="Squiz.Commenting.FunctionComment.Missing"/>
+        <exclude name="Squiz.Commenting.VariableComment.Missing"/>
+        <exclude name="Squiz.Commenting.ClassComment.Missing"/>
+        <exclude name="Generic.Commenting.DocComment.MissingShort"/>
+        <exclude name="Squiz.Commenting.FunctionComment.MissingParamComment"/>
+        <!-- Yoda conditions hurt readability with typed code; we already use === -->
+        <exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+    </rule>
+
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="power-agreement"/>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+        <properties>
+            <property name="prefixes" type="array">
+                <element value="power_agreement"/>
+                <element value="PowerAgreement"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>

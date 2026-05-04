@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    paths:
+        - power-agreement.php
+        - uninstall.php
+        - src
+    bootstrapFiles:
+        - vendor/php-stubs/woocommerce-stubs/woocommerce-stubs.php
+    treatPhpDocTypesAsCertain: false
+    reportUnmatchedIgnoredErrors: false
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon

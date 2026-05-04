@@ -1,0 +1,136 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    name: PHPCS + PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: none
+      - name: Cache composer
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: composer install
+        run: composer install --no-interaction --no-progress --prefer-dist
+      - name: PHPCS
+        run: composer lint:phpcs
+      - name: PHPStan
+        run: composer lint:phpstan
+
+  unit:
+    name: PHPUnit (unit, no WP)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+          coverage: none
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Unit tests
+        run: composer test:unit
+
+  integration:
+    name: PHPUnit (integration, HPOS=${{ matrix.hpos }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        hpos: ['on', 'off']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: npm ci
+        run: npm ci
+      - name: Boot wp-env
+        run: npm run wp-env:start
+      - name: Wait for wp-env
+        run: |
+          for i in {1..30}; do
+            if curl -sf http://localhost:8889/wp-json > /dev/null; then break; fi
+            sleep 2
+          done
+      - name: Composer install inside container
+        run: npx wp-env run tests-cli --env-cwd=wp-content/plugins/power-agreement -- composer install --no-interaction --no-progress --prefer-dist
+      - name: PHPUnit integration (HPOS=${{ matrix.hpos }})
+        env:
+          POWER_AGREEMENT_HPOS: ${{ matrix.hpos }}
+        run: |
+          npx wp-env run tests-cli --env-cwd=wp-content/plugins/power-agreement -- bash -c "POWER_AGREEMENT_LOAD_WP=1 POWER_AGREEMENT_HPOS=${{ matrix.hpos }} ./vendor/bin/phpunit --colors=always --testsuite=integration"
+
+  e2e:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - run: npm ci
+      - name: Build block bundle
+        run: npm run build
+      - name: Boot wp-env
+        run: npm run wp-env:start
+      - name: Wait for wp-env
+        run: |
+          for i in {1..30}; do
+            if curl -sf http://localhost:8888/wp-json > /dev/null; then break; fi
+            sleep 2
+          done
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: Run E2E
+        run: npm run test:e2e
+      - name: Upload trace on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-trace
+          path: test-results/
+
+  i18n:
+    name: i18n .pot drift check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          tools: composer:v2
+      - run: composer install --no-interaction --no-progress --prefer-dist
+      - name: Regenerate .pot
+        run: |
+          ./vendor/bin/wp i18n make-pot . languages/power-agreement.pot.new \
+            --slug=power-agreement --domain=power-agreement \
+            --exclude=node_modules,vendor,tests,assets/build,specs,test-results \
+            --skip-audit
+      - name: Diff against committed .pot
+        run: |
+          # Strip the auto-generated POT-Creation-Date so a clean check ignores
+          # the timestamp difference and only catches real string drift.
+          sed -i '/POT-Creation-Date/d' languages/power-agreement.pot
+          sed -i '/POT-Creation-Date/d' languages/power-agreement.pot.new
+          diff -u languages/power-agreement.pot languages/power-agreement.pot.new

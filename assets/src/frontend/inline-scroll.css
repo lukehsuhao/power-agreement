@@ -7,6 +7,9 @@
  *
  * Inherits theme typography / colours via `currentColor` and
  * unspecified font-family so the component blends with any theme.
+ *
+ * Buttons use plugin-prefixed class names (no .button) so the host
+ * theme's primary-action styling does not bleed in and break layout.
  */
 
 .power-agreement.power-agreement--inline-scroll {
@@ -128,21 +131,37 @@
 	margin: 0;
 	font-size: 1.15em;
 	font-weight: 600;
+	line-height: 1.3;
 }
 
-.power-agreement__modal-close {
+/* The × button at the top-right of the modal. Distinct class from the
+ * footer's confirm button so themes can't override its compact size. */
+.power-agreement__modal-icon-close {
+	-webkit-appearance: none;
+	appearance: none;
 	background: transparent;
 	border: 1px solid rgba(0, 0, 0, 0.15);
 	border-radius: 4px;
-	padding: 0.2em 0.6em;
+	width: 2em;
+	height: 2em;
+	min-width: 0;
 	font-size: 1.1em;
 	line-height: 1;
 	cursor: pointer;
 	color: inherit;
+	padding: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 }
 
-.power-agreement__modal-close:hover {
+.power-agreement__modal-icon-close:hover {
 	background: rgba(0, 0, 0, 0.06);
+}
+
+.power-agreement__modal-icon-close:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 1px;
 }
 
 .power-agreement__modal-body {
@@ -161,14 +180,66 @@
 }
 
 .power-agreement__modal-footer {
-	padding: 0.8em 1.2em;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1em;
+	padding: 0.85em 1.2em;
 	border-top: 1px solid rgba(0, 0, 0, 0.08);
 	background: rgba(0, 0, 0, 0.02);
-	text-align: right;
+	flex-wrap: wrap;
 }
 
-.power-agreement__modal-footer .power-agreement__modal-close {
-	font-size: 1em;
-	padding: 0.45em 1em;
+/* Inner consent label inside the modal — same look as the outer one
+ * but no top margin (it now lives in the footer row). */
+.power-agreement__consent--inner {
+	margin: 0;
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+/* The confirm action — plugin-owned styling so the host theme's
+ * .button class never gets a chance to fight us. We use a fixed
+ * dark grey so the button reads consistently on any theme; the
+ * preview / consent label still pick up theme typography because
+ * those elements use `color: inherit`.
+ *
+ * (Earlier we tried `background: color-mix(currentColor, ...)` to
+ * adapt to the theme's accent, but `currentColor` resolves to the
+ * button's own white text — a tautology that produced an invisible
+ * white-on-white button.) */
+.power-agreement__confirm-btn {
+	-webkit-appearance: none;
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	min-width: 5em;
+	padding: 0.6em 1.5em;
+	font: inherit;
+	font-weight: 600;
+	line-height: 1.2;
+	color: #ffffff;
+	background-color: #1f2937;
+	border: 1px solid #1f2937;
+	border-radius: 6px;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: background-color 120ms ease, border-color 120ms ease, transform 80ms ease;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.power-agreement__confirm-btn:hover {
+	background-color: #111827;
+	border-color: #111827;
+}
+
+.power-agreement__confirm-btn:active {
+	transform: translateY(1px);
+	box-shadow: none;
+}
+
+.power-agreement__confirm-btn:focus-visible {
+	outline: 2px solid #111827;
+	outline-offset: 2px;
 }

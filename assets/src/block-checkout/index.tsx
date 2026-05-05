@@ -139,7 +139,8 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 	};
 
 	const expandHint = __('Click to enlarge', 'power-agreement');
-	const closeLabel = __('Close', 'power-agreement');
+	const closeAriaLabel = __('Close', 'power-agreement');
+	const confirmLabel = __('Confirm', 'power-agreement');
 	const ariaLabel = `${__('Open', 'power-agreement')} ${settings.title}`;
 
 	return (
@@ -178,8 +179,8 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 					</h2>
 					<button
 						type="button"
-						className="power-agreement__modal-close"
-						aria-label={closeLabel}
+						className="power-agreement__modal-icon-close"
+						aria-label={closeAriaLabel}
 						onClick={closeDialog}
 					>
 						×
@@ -190,12 +191,20 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 					dangerouslySetInnerHTML={{ __html: settings.content }}
 				/>
 				<div className="power-agreement__modal-footer">
+					<label className="power-agreement__consent power-agreement__consent--inner">
+						<input
+							type="checkbox"
+							checked={consent}
+							onChange={(event) => setConsent(event.target.checked)}
+						/>
+						<span>{settings.consent_text}</span>
+					</label>
 					<button
 						type="button"
-						className="power-agreement__modal-close button"
+						className="power-agreement__confirm-btn"
 						onClick={closeDialog}
 					>
-						{closeLabel}
+						{confirmLabel}
 					</button>
 				</div>
 			</dialog>

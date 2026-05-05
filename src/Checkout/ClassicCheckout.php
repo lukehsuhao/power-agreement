@@ -175,7 +175,9 @@ final class ClassicCheckout {
 			<label class="power-agreement__consent">
 				<input type="checkbox"
 					name="<?php echo esc_attr( self::FIELD_NAME ); ?>"
-					value="1" />
+					id="power-agreement-consent-outer"
+					value="1"
+					data-power-agreement-consent="outer" />
 				<span><?php echo esc_html( $consent_text ); ?></span>
 			</label>
 			<dialog id="power-agreement-modal"
@@ -187,7 +189,7 @@ final class ClassicCheckout {
 						<?php echo esc_html( $title ); ?>
 					</h2>
 					<button type="button"
-						class="power-agreement__modal-close"
+						class="power-agreement__modal-icon-close"
 						data-power-agreement-close
 						aria-label="<?php esc_attr_e( 'Close', 'power-agreement' ); ?>">×</button>
 				</div>
@@ -195,10 +197,16 @@ final class ClassicCheckout {
 					<?php echo wp_kses_post( $content ); ?>
 				</div>
 				<div class="power-agreement__modal-footer">
+					<label class="power-agreement__consent power-agreement__consent--inner">
+						<input type="checkbox"
+							value="1"
+							data-power-agreement-consent="inner" />
+						<span><?php echo esc_html( $consent_text ); ?></span>
+					</label>
 					<button type="button"
-						class="power-agreement__modal-close button"
+						class="power-agreement__confirm-btn"
 						data-power-agreement-close>
-						<?php esc_html_e( 'Close', 'power-agreement' ); ?>
+						<?php esc_html_e( 'Confirm', 'power-agreement' ); ?>
 					</button>
 				</div>
 			</dialog>

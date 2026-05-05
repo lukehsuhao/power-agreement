@@ -5,7 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Power Agreement 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-agreement\n"
-"PO-Revision-Date: 2026-05-04 00:00+0800\n"
+"POT-Creation-Date: 2026-05-05T05:46:23+00:00\n"
+"PO-Revision-Date: 2026-05-05 00:00+0800\n"
 "Last-Translator: Power Agreement Team\n"
 "Language-Team: 繁體中文 <zh_TW@li.org>\n"
 "Language: zh_TW\n"
@@ -14,70 +15,202 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: power-agreement\n"
 
-#. Plugin Name
+#. Plugin Name of the plugin
+#: power-agreement.php:3 src/Settings/SettingsPage.php:39
+#: src/Settings/SettingsPage.php:40 assets/build/index.js:1
 msgid "Power Agreement"
 msgstr "Power Agreement 結帳合約"
 
-#. Description
-msgid "Adds a configurable agreement consent block to WooCommerce checkout (Classic + Block) and stores a per-order snapshot for legal evidence."
-msgstr "在 WooCommerce 結帳頁（傳統與區塊兩種）加入可設定的合約同意區塊，並為每筆訂單保留一份合約快照作為法律佐證。"
+#. Plugin URI of the plugin
+#: power-agreement.php:4
+msgid "https://github.com/zenbuapps/power-agreement"
+msgstr ""
 
-msgid "Power Agreement: Composer dependencies are missing. Run \"composer install\" inside the plugin directory."
-msgstr "Power Agreement：找不到 Composer 套件，請在外掛目錄執行 \"composer install\"。"
+#. Description of the plugin
+#: power-agreement.php:5
+msgid ""
+"Adds a configurable agreement consent block to WooCommerce checkout (Classic "
+"+ Block) and stores a per-order snapshot for legal evidence."
+msgstr ""
+"在 WooCommerce 結帳頁（傳統與區塊兩種）加入可設定的合約同意區塊，並為每筆訂單"
+"保留一份合約快照作為法律佐證。"
 
+#. Author of the plugin
+#: power-agreement.php:10
+msgid "Zenbu"
+msgstr ""
+
+#. Author URI of the plugin
+#: power-agreement.php:11
+msgid "https://zenbu.tw"
+msgstr ""
+
+#: power-agreement.php:42
+msgid ""
+"Power Agreement: Composer dependencies are missing. Run \"composer install\" "
+"inside the plugin directory."
+msgstr ""
+"Power Agreement：找不到 Composer 套件，請在外掛目錄執行 \"composer "
+"install\"。"
+
+#: power-agreement.php:92
 msgid "Power Agreement is not active:"
 msgstr "Power Agreement 未啟用："
 
+#: src/Checkout/BlockCheckout.php:202
 msgid "Whether the customer has accepted the agreement."
 msgstr "客戶是否已同意合約。"
 
+#. Translators: aria-label on the scrollable preview that opens a modal on click.
+#: src/Checkout/ClassicCheckout.php:153
+#, php-format
+msgid "Open %s in full-size view"
+msgstr "放大檢視 %s"
+
+#: src/Checkout/ClassicCheckout.php:154 assets/build/index.js:1
+msgid "Click to enlarge"
+msgstr "點擊放大"
+
+#: src/Checkout/ClassicCheckout.php:194 assets/build/index.js:1
+msgid "Close"
+msgstr "關閉"
+
+#: src/Checkout/ClassicCheckout.php:209 assets/build/index.js:1
+msgid "Confirm"
+msgstr "確認"
+
+#. translators: %s: the consent checkbox label
+#: src/Checkout/ConsentValidator.php:46
+#, php-format
 msgid "Please check \"%s\" to place your order."
 msgstr "請先勾選「%s」後再下單。"
 
+#: src/Order/OrderAdminDisplay.php:37 src/Order/OrderAdminDisplay.php:49
 msgid "Agreement Consent"
 msgstr "合約同意紀錄"
 
+#: src/Order/OrderAdminDisplay.php:39
 msgid "No agreement consent record on this order."
 msgstr "本訂單沒有合約同意紀錄。"
 
+#: src/Order/OrderAdminDisplay.php:52
 msgid "Agreed at:"
 msgstr "同意時間："
 
+#: src/Order/OrderAdminDisplay.php:56
 msgid "Customer IP:"
 msgstr "客戶 IP："
 
+#: src/Order/OrderAdminDisplay.php:60
 msgid "SHA-256:"
 msgstr "SHA-256："
 
+#: src/Order/OrderAdminDisplay.php:65
 msgid "View captured agreement HTML"
 msgstr "查看當下合約全文"
 
+#: src/Settings/SettingsPage.php:60
 msgid "Checkout Agreement"
 msgstr "結帳合約"
 
+#: src/Settings/SettingsPage.php:67
 msgid "Enable agreement on checkout"
 msgstr "啟用結帳合約"
 
+#: src/Settings/SettingsPage.php:75
 msgid "Section title"
 msgstr "區塊標題"
 
+#: src/Settings/SettingsPage.php:83
 msgid "Agreement body"
 msgstr "合約內容"
 
+#: src/Settings/SettingsPage.php:91
 msgid "Consent checkbox label"
 msgstr "同意勾選文字"
 
-msgid "Agreement is enabled but the body is empty — checkout will skip rendering until you add some content."
+#: src/Settings/SettingsPage.php:99
+msgid "Display mode"
+msgstr "顯示模式"
+
+#: src/Settings/SettingsPage.php:132
+msgid ""
+"Agreement is enabled but the body is empty — checkout will skip rendering "
+"until you add some content."
 msgstr "合約已啟用但內容為空，在補上內容前結帳頁不會顯示合約。"
 
-msgid "Configure the agreement that customers must accept before placing an order."
+#: src/Settings/SettingsPage.php:149
+msgid ""
+"Configure the agreement that customers must accept before placing an order."
 msgstr "設定客戶必須同意才能下單的合約內容。"
 
+#: src/Settings/SettingsPage.php:159
 msgid "Show the agreement section on checkout and require consent."
 msgstr "在結帳頁顯示合約區塊並要求同意。"
 
+#: src/Settings/SettingsPage.php:203
+msgid "Inline scrolling preview (click to enlarge in modal)"
+msgstr "內嵌捲動預覽（點擊在彈窗中放大）"
+
+#: src/Settings/SettingsPage.php:204
+msgid "Accordion (collapsed by default)"
+msgstr "摺疊（預設收合）"
+
+#: src/Settings/SettingsPage.php:218
+msgid ""
+"Inline scroll keeps the agreement partially visible from the start; the "
+"customer can scroll to read or click the box to open a full-size modal. "
+"Accordion is collapsed until clicked."
+msgstr ""
+"「內嵌捲動」模式下合約一開始就部分可見，客戶可在框中捲動閱讀，或點擊框框開啟"
+"全螢幕彈窗。「摺疊」模式則預設收合，需點擊才會展開。"
+
+#: src/Settings/SettingsRepository.php:52
 msgid "Agreement"
 msgstr "合約條款"
 
+#: src/Settings/SettingsRepository.php:54
 msgid "I have read and agree to the agreement above."
 msgstr "我已閱讀並同意上述合約。"
+
+#: assets/build/index.js:1
+msgid "Open"
+msgstr "開啟"
+
+#: assets/build/block.json
+#, fuzzy
+msgctxt "block title"
+msgid "Power Agreement"
+msgstr "Power Agreement 結帳合約"
+
+#: assets/build/block.json
+#, fuzzy
+msgctxt "block description"
+msgid ""
+"Collapsible agreement section with required consent checkbox shown above the "
+"place-order button on Block Checkout."
+msgstr "在區塊結帳頁的「下單」按鈕上方顯示可摺疊的合約區塊與必填的同意勾選框。"
+
+#: assets/build/block.json
+#, fuzzy
+msgctxt "block keyword"
+msgid "agreement"
+msgstr "合約"
+
+#: assets/build/block.json
+#, fuzzy
+msgctxt "block keyword"
+msgid "consent"
+msgstr "同意"
+
+#: assets/build/block.json
+#, fuzzy
+msgctxt "block keyword"
+msgid "checkout"
+msgstr "結帳"
+
+#: assets/build/block.json
+#, fuzzy
+msgctxt "block keyword"
+msgid "terms"
+msgstr "條款"

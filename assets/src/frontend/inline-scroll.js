@@ -1,24 +1,24 @@
 /**
  * Power Agreement — inline-scroll display mode.
  *
- * Wires the preview-box → <dialog> open/close flow. Uses event
- * delegation on `document` so the same listener works after WC's
- * ajax fragment refresh of the order review section.
+ * Wires three things via document-level event delegation so we keep
+ * working after WC's ajax fragment refresh of the order review:
  *
- * `<dialog>.showModal()` gives us focus trap, ESC-to-close, and a
- * backdrop for free, so we only need to hand off open/close intents.
+ *   1. preview box click / keyboard activation → open the <dialog>
+ *   2. close affordances ([data-power-agreement-close], backdrop click)
+ *      → close the <dialog>
+ *   3. two-way sync between the outer consent checkbox (the actual
+ *      form field that gets submitted) and the inner mirror checkbox
+ *      that lives inside the modal — so the customer can tick/untick
+ *      from either place and see the same state.
  *
- * Backwards compatibility: when `<dialog>` isn't supported (Safari
- * < 15.4 or older Firefox), we fall back to toggling a `.is-open`
- * class on the dialog element so our CSS can still show it as a
- * pseudo-modal. No fancy focus trap in that path; it's a graceful
- * degradation, not a primary code path.
+ * Native <dialog>.showModal() gives us focus trap, ESC-to-close, and
+ * a backdrop for free; we only orchestrate intents.
  */
 ( function () {
 	'use strict';
 
 	function findDialog( origin ) {
-		// First try aria-controls, then fallback to nearest .power-agreement.
 		var id = origin.getAttribute( 'aria-controls' );
 		if ( id ) {
 			var byId = document.getElementById( id );
@@ -30,10 +30,34 @@
 		return wrap ? wrap.querySelector( '[data-power-agreement-modal]' ) : null;
 	}
 
-	function open( dialog ) {
+	function findOuterConsent( wrap ) {
+		return wrap
+			? wrap.querySelector( 'input[data-power-agreement-consent="outer"]' )
+			: null;
+	}
+
+	function findInnerConsent( wrap ) {
+		return wrap
+			? wrap.querySelector( 'input[data-power-agreement-consent="inner"]' )
+			: null;
+	}
+
+	function syncFromOuter( wrap ) {
+		var outer = findOuterConsent( wrap );
+		var inner = findInnerConsent( wrap );
+		if ( outer && inner ) {
+			inner.checked = outer.checked;
+		}
+	}
+
+	function open( dialog, wrap ) {
 		if ( ! dialog ) {
 			return;
 		}
+		// Make sure the inner mirror reflects the outer state when the
+		// modal opens — even if the user changed the outer checkbox
+		// without touching the modal in this session.
+		syncFromOuter( wrap );
 		if ( typeof dialog.showModal === 'function' ) {
 			try {
 				dialog.showModal();
@@ -62,7 +86,7 @@
 		dialog.classList.remove( 'is-open' );
 	}
 
-	// Open the modal when the preview is clicked or activated via keyboard.
+	// Click handlers: open / close.
 	document.addEventListener( 'click', function ( event ) {
 		var target = event.target;
 		if ( ! target || ! target.closest ) {
@@ -80,11 +104,12 @@
 		var openTrigger = target.closest( '[data-power-agreement-open]' );
 		if ( openTrigger ) {
 			event.preventDefault();
-			open( findDialog( openTrigger ) );
+			var wrap = openTrigger.closest( '.power-agreement' );
+			open( findDialog( openTrigger ), wrap );
 		}
 	} );
 
-	// Keyboard activation for the role="button" preview.
+	// Keyboard activation (Enter / Space) for the role="button" preview.
 	document.addEventListener( 'keydown', function ( event ) {
 		if ( event.key !== 'Enter' && event.key !== ' ' ) {
 			return;
@@ -96,12 +121,11 @@
 			return;
 		}
 		event.preventDefault();
-		open( findDialog( trigger ) );
+		var wrap = trigger.closest( '.power-agreement' );
+		open( findDialog( trigger ), wrap );
 	} );
 
-	// Click outside the dialog (on its backdrop, which renders inside the
-	// dialog element itself) closes the modal. We can detect this because
-	// a backdrop click hits the dialog node directly, not its children.
+	// Click outside the dialog content (on the backdrop) closes it.
 	document.addEventListener( 'click', function ( event ) {
 		var dialog = event.target;
 		if ( ! dialog || ! dialog.matches || ! dialog.matches( '[data-power-agreement-modal]' ) ) {
@@ -118,6 +142,28 @@
 			event.clientY <= rect.bottom;
 		if ( ! inside ) {
 			close( dialog );
+		}
+	} );
+
+	// Two-way sync between outer and inner consent checkboxes.
+	document.addEventListener( 'change', function ( event ) {
+		var input = event.target;
+		if ( ! input || ! input.matches ) {
+			return;
+		}
+		var role = input.getAttribute( 'data-power-agreement-consent' );
+		if ( role !== 'outer' && role !== 'inner' ) {
+			return;
+		}
+		var wrap = input.closest( '.power-agreement' );
+		if ( ! wrap ) {
+			return;
+		}
+		var sibling = role === 'outer'
+			? findInnerConsent( wrap )
+			: findOuterConsent( wrap );
+		if ( sibling && sibling.checked !== input.checked ) {
+			sibling.checked = input.checked;
 		}
 	} );
 } )();

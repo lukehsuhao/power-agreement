@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Power Agreement 0.3.0\n"
+"Project-Id-Version: Power Agreement 0.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-agreement\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-05T08:32:33+00:00\n"
+"POT-Creation-Date: 2026-05-05T09:42:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: power-agreement\n"
@@ -50,21 +50,21 @@ msgstr ""
 msgid "Power Agreement is not active:"
 msgstr ""
 
-#: src/Checkout/BlockCheckout.php:204
+#: src/Checkout/BlockCheckout.php:206
 msgid "Whether the customer has accepted the agreement."
 msgstr ""
 
-#: src/Checkout/ClassicCheckout.php:154
+#: src/Checkout/ClassicCheckout.php:188
 #: assets/build/index.js:1
-msgid "Expand to view"
+msgid "Read agreement"
 msgstr ""
 
-#: src/Checkout/ClassicCheckout.php:187
+#: src/Checkout/ClassicCheckout.php:225
 #: assets/build/index.js:1
 msgid "Close"
 msgstr ""
 
-#: src/Checkout/ClassicCheckout.php:202
+#: src/Checkout/ClassicCheckout.php:242
 #: assets/build/index.js:1
 msgid "Confirm"
 msgstr ""
@@ -124,35 +124,43 @@ msgstr ""
 msgid "Display mode"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:134
+#: src/Settings/SettingsPage.php:109
+msgid "Button colour"
+msgstr ""
+
+#: src/Settings/SettingsPage.php:153
 msgid "Agreement is enabled but the body is empty — checkout will skip rendering until you add some content."
 msgstr ""
 
-#: src/Settings/SettingsPage.php:151
+#: src/Settings/SettingsPage.php:170
 msgid "Configure the agreement that customers must accept before placing an order."
 msgstr ""
 
-#: src/Settings/SettingsPage.php:161
+#: src/Settings/SettingsPage.php:180
 msgid "Show the agreement section on checkout and require consent."
 msgstr ""
 
-#: src/Settings/SettingsPage.php:205
+#: src/Settings/SettingsPage.php:230
+msgid "Background colour of the \"Read agreement\" / \"Confirm\" buttons. White text is used on top, so prefer a dark colour for readable contrast."
+msgstr ""
+
+#: src/Settings/SettingsPage.php:239
 msgid "Inline scrolling preview (click to enlarge in modal)"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:206
+#: src/Settings/SettingsPage.php:240
 msgid "Accordion (collapsed by default)"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:220
+#: src/Settings/SettingsPage.php:254
 msgid "Inline scroll keeps the agreement partially visible from the start; the customer can scroll to read or click the box to open a full-size modal. Accordion is collapsed until clicked."
 msgstr ""
 
-#: src/Settings/SettingsRepository.php:52
+#: src/Settings/SettingsRepository.php:54
 msgid "Agreement"
 msgstr ""
 
-#: src/Settings/SettingsRepository.php:54
+#: src/Settings/SettingsRepository.php:56
 msgid "I have read and agree to the agreement above."
 msgstr ""
 

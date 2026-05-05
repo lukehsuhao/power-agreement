@@ -76,6 +76,24 @@ final class ClassicCheckout {
 			array(),
 			$this->assetVersion( $css_path )
 		);
+
+		// Inject the merchant-configurable button colour as inline CSS so it
+		// overrides the default `#1f2937` baked into the stylesheet without
+		// shipping a separate dynamic stylesheet.
+		$button_color = $this->repo->buttonColor();
+		if ( $button_color ) {
+			$safe = sanitize_hex_color( $button_color );
+			if ( $safe ) {
+				$css = sprintf(
+					// Hover uses CSS filter so any colour the merchant picks
+					// gets a sensible "darker on hover" without us needing
+					// to compute a second hex value server-side.
+					'.power-agreement__expand-btn,.power-agreement__confirm-btn{background-color:%1$s !important;border-color:%1$s !important;}.power-agreement__expand-btn:hover,.power-agreement__confirm-btn:hover{background-color:%1$s !important;border-color:%1$s !important;filter:brightness(0.88);}',
+					$safe
+				);
+				wp_add_inline_style( 'power-agreement-frontend', $css );
+			}
+		}
 		wp_enqueue_script(
 			'power-agreement-frontend',
 			$base . 'assets/src/frontend/' . $slug . '.js',
@@ -167,7 +185,7 @@ final class ClassicCheckout {
 		$content      = $this->repo->content();
 		$consent_text = $this->repo->consentText();
 
-		$expand_label = __( 'Expand to view', 'power-agreement' );
+		$expand_label = __( 'Read agreement', 'power-agreement' );
 
 		?>
 		<div class="power-agreement power-agreement--inline-scroll" data-power-agreement>

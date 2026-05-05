@@ -27,6 +27,7 @@ type Settings = {
 	content: string;
 	consent_text: string;
 	display_mode: DisplayMode;
+	button_color: string;
 };
 
 const useConsentSync = (consent: boolean, settings: Settings) => {
@@ -131,9 +132,12 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 		el.removeAttribute('open');
 	};
 
-	const expandLabel = __('Expand to view', 'power-agreement');
+	const expandLabel = __('Read agreement', 'power-agreement');
 	const closeAriaLabel = __('Close', 'power-agreement');
 	const confirmLabel = __('Confirm', 'power-agreement');
+	const btnStyle = settings.button_color
+		? { backgroundColor: settings.button_color, borderColor: settings.button_color }
+		: undefined;
 
 	return (
 		<div className="power-agreement power-agreement--inline-scroll wp-block-power-agreement" data-power-agreement>
@@ -144,6 +148,7 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 					role="button"
 					tabIndex={0}
 					className="power-agreement__expand-btn"
+					style={btnStyle}
 					aria-haspopup="dialog"
 					onClick={(e) => { e.preventDefault(); openDialog(); }}
 					onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDialog(); } }}
@@ -193,6 +198,7 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 						role="button"
 						tabIndex={0}
 						className="power-agreement__confirm-btn"
+						style={btnStyle}
 						onClick={(e) => { e.preventDefault(); closeDialog(); }}
 						onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeDialog(); } }}
 					>
@@ -211,6 +217,7 @@ const PowerAgreementBlock = () => {
 		content: '',
 		consent_text: '',
 		display_mode: 'inline_scroll',
+		button_color: '#1f2937',
 	}) as unknown) as Settings;
 
 	if (!settings.enabled || !settings.content) {

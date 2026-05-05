@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, consent, terms, gdpr
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.3.3
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,10 @@ No. The HTML is captured at the moment of order creation; old orders continue to
 No. Uninstall only removes the plugin's settings option. Order meta (the actual consent records) is preserved.
 
 == Changelog ==
+
+= 0.4.0 =
+* New admin setting: **Button colour** — a colour picker that styles the "Read agreement" and "Confirm" buttons. Defaults to dark grey (`#1f2937`); white text is always used on top, so dark colours give the best contrast. Hover state uses a CSS `filter: brightness(0.88)` so any picked colour gets a sensible darker shade automatically.
+* Renamed the expand button from "Expand to view" / 全部展開 to "Read agreement" / **閱讀合約** to make the intent clearer.
 
 = 0.3.3 =
 * Replace `<button>` elements with `<a role="button">` for the expand / close / confirm controls. Some checkout-customising plugins on real merchant sites (Flexible Checkout Fields, Conditional Payments, certain caching layers) over-aggressively sanitise the order-review HTML and strip non-submit `<button>` elements. Anchors survive that filtering, so the modal stays reachable. Behaviour and styling are unchanged for normal sites.

@@ -103,11 +103,19 @@ final class SettingsPage {
 			self::MENU_SLUG,
 			self::SECTION_ID
 		);
+
+		add_settings_field(
+			'button_color',
+			__( 'Button colour', 'power-agreement' ),
+			array( $this, 'field_button_color' ),
+			self::MENU_SLUG,
+			self::SECTION_ID
+		);
 	}
 
 	/**
 	 * @param array<string, mixed> $raw
-	 * @return array{enabled: bool, title: string, content: string, consent_text: string, display_mode: string}
+	 * @return array{enabled: bool, title: string, content: string, consent_text: string, display_mode: string, button_color: string}
 	 */
 	public function sanitize( array $raw ): array {
 		return $this->repo->sanitize( $raw );
@@ -119,6 +127,17 @@ final class SettingsPage {
 			return;
 		}
 		wp_enqueue_editor();
+
+		// WordPress's bundled colour picker — depends on wp-color-picker
+		// (script + style) and Iris. Initialise our input via a tiny
+		// inline jQuery call so we don't ship a separate JS file just
+		// for one widget.
+		wp_enqueue_style( 'wp-color-picker' );
+		wp_enqueue_script( 'wp-color-picker' );
+		wp_add_inline_script(
+			'wp-color-picker',
+			'jQuery(function($){$(".power-agreement-color-picker").wpColorPicker();});'
+		);
 	}
 
 	public function render(): void {
@@ -195,6 +214,21 @@ final class SettingsPage {
 		$name  = SettingsRepository::OPTION . '[consent_text]';
 		?>
 		<input type="text" class="regular-text" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" maxlength="200" />
+		<?php
+	}
+
+	public function field_button_color(): void {
+		$value = $this->repo->buttonColor();
+		$name  = SettingsRepository::OPTION . '[button_color]';
+		?>
+		<input type="text"
+			class="power-agreement-color-picker"
+			name="<?php echo esc_attr( $name ); ?>"
+			value="<?php echo esc_attr( $value ); ?>"
+			data-default-color="<?php echo esc_attr( SettingsRepository::BUTTON_COLOR_DEFAULT ); ?>" />
+		<p class="description">
+			<?php esc_html_e( 'Background colour of the "Read agreement" / "Confirm" buttons. White text is used on top, so prefer a dark colour for readable contrast.', 'power-agreement' ); ?>
+		</p>
 		<?php
 	}
 

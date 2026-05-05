@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Power Agreement 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-agreement\n"
-"POT-Creation-Date: 2026-05-05T08:32:33+00:00\n"
+"POT-Creation-Date: 2026-05-05T09:42:05+00:00\n"
 "PO-Revision-Date: 2026-05-05 00:00+0800\n"
 "Last-Translator: Power Agreement Team\n"
 "Language-Team: 繁體中文 <zh_TW@li.org>\n"
@@ -57,19 +57,19 @@ msgstr ""
 msgid "Power Agreement is not active:"
 msgstr "Power Agreement 未啟用："
 
-#: src/Checkout/BlockCheckout.php:204
+#: src/Checkout/BlockCheckout.php:206
 msgid "Whether the customer has accepted the agreement."
 msgstr "客戶是否已同意合約。"
 
-#: src/Checkout/ClassicCheckout.php:154 assets/build/index.js:1
-msgid "Expand to view"
-msgstr "全部展開"
+#: src/Checkout/ClassicCheckout.php:188 assets/build/index.js:1
+msgid "Read agreement"
+msgstr "閱讀合約"
 
-#: src/Checkout/ClassicCheckout.php:187 assets/build/index.js:1
+#: src/Checkout/ClassicCheckout.php:225 assets/build/index.js:1
 msgid "Close"
 msgstr "關閉"
 
-#: src/Checkout/ClassicCheckout.php:202 assets/build/index.js:1
+#: src/Checkout/ClassicCheckout.php:242 assets/build/index.js:1
 msgid "Confirm"
 msgstr "確認"
 
@@ -127,30 +127,42 @@ msgstr "同意勾選文字"
 msgid "Display mode"
 msgstr "顯示模式"
 
-#: src/Settings/SettingsPage.php:134
+#: src/Settings/SettingsPage.php:109
+msgid "Button colour"
+msgstr "按鈕顏色"
+
+#: src/Settings/SettingsPage.php:153
 msgid ""
 "Agreement is enabled but the body is empty — checkout will skip rendering "
 "until you add some content."
 msgstr "合約已啟用但內容為空，在補上內容前結帳頁不會顯示合約。"
 
-#: src/Settings/SettingsPage.php:151
+#: src/Settings/SettingsPage.php:170
 msgid ""
 "Configure the agreement that customers must accept before placing an order."
 msgstr "設定客戶必須同意才能下單的合約內容。"
 
-#: src/Settings/SettingsPage.php:161
+#: src/Settings/SettingsPage.php:180
 msgid "Show the agreement section on checkout and require consent."
 msgstr "在結帳頁顯示合約區塊並要求同意。"
 
-#: src/Settings/SettingsPage.php:205
+#: src/Settings/SettingsPage.php:230
+msgid ""
+"Background colour of the \"Read agreement\" / \"Confirm\" buttons. White "
+"text is used on top, so prefer a dark colour for readable contrast."
+msgstr ""
+"「閱讀合約」與「確認」按鈕的背景色。按鈕文字固定為白色，建議選擇深色以維持對"
+"比度。"
+
+#: src/Settings/SettingsPage.php:239
 msgid "Inline scrolling preview (click to enlarge in modal)"
 msgstr "內嵌捲動預覽（點擊在彈窗中放大）"
 
-#: src/Settings/SettingsPage.php:206
+#: src/Settings/SettingsPage.php:240
 msgid "Accordion (collapsed by default)"
 msgstr "摺疊（預設收合）"
 
-#: src/Settings/SettingsPage.php:220
+#: src/Settings/SettingsPage.php:254
 msgid ""
 "Inline scroll keeps the agreement partially visible from the start; the "
 "customer can scroll to read or click the box to open a full-size modal. "
@@ -159,11 +171,11 @@ msgstr ""
 "「內嵌捲動」模式下合約一開始就部分可見，客戶可在框中捲動閱讀，或點擊框框開啟"
 "全螢幕彈窗。「摺疊」模式則預設收合，需點擊才會展開。"
 
-#: src/Settings/SettingsRepository.php:52
+#: src/Settings/SettingsRepository.php:54
 msgid "Agreement"
 msgstr "合約條款"
 
-#: src/Settings/SettingsRepository.php:54
+#: src/Settings/SettingsRepository.php:56
 msgid "I have read and agree to the agreement above."
 msgstr "我已閱讀並同意上述合約。"
 
@@ -204,6 +216,9 @@ msgstr "結帳"
 msgctxt "block keyword"
 msgid "terms"
 msgstr "條款"
+
+#~ msgid "Expand to view"
+#~ msgstr "全部展開"
 
 #, php-format
 #~ msgid "Open %s in full-size view"

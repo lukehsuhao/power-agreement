@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] — 2026-05-05
+
+### Added
+
+- **Button colour setting.** New `button_color` field in `WooCommerce → Power Agreement`, rendered as WordPress's bundled `wp-color-picker` widget. Applies to the "Read agreement" CTA in the inline preview and the "Confirm" button in the modal. The colour is stored as a sanitised hex string (`sanitize_hex_color`) and falls back to the default `#1f2937` if the value is invalid.
+  - Classic Checkout: injected via `wp_add_inline_style` so we don't ship a separate dynamic stylesheet.
+  - Block Checkout: shipped through `IntegrationInterface::get_script_data()`; the React component reads `settings.button_color` and applies it as an inline `style={{ backgroundColor, borderColor }}` on the buttons.
+  - Hover state uses CSS `filter: brightness(0.88)` so any colour the merchant picks (light blue, brand accent, etc.) gets a sensible "slightly darker on hover" automatically — no need to compute or store a second hex.
+
+### Changed
+
+- **Renamed the expand action from "Expand to view" → "Read agreement"** (`zh_TW`: "全部展開" → "閱讀合約"). The new label is more direct about what clicking does. The old translation entry stays in the .po as an obsolete (`#~`) marker so legacy installs that haven't pulled the new .mo yet won't crash.
+
 ## [0.3.3] — 2026-05-05
 
 ### Fixed

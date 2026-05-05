@@ -176,7 +176,7 @@ final class BlockCheckout implements IntegrationInterface {
 	}
 
 	/**
-	 * @return array{enabled: bool, title: string, content: string, consent_text: string}
+	 * @return array{enabled: bool, title: string, content: string, consent_text: string, display_mode: string, button_color: string}
 	 */
 	public function get_script_data(): array {
 		return array(
@@ -184,6 +184,8 @@ final class BlockCheckout implements IntegrationInterface {
 			'title'        => $this->repo->title(),
 			'content'      => $this->repo->content(),
 			'consent_text' => $this->repo->consentText(),
+			'display_mode' => $this->repo->displayMode(),
+			'button_color' => $this->repo->buttonColor(),
 		);
 	}
 

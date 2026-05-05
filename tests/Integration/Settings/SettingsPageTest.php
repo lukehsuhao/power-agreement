@@ -54,6 +54,20 @@ final class SettingsPageTest extends WP_UnitTestCase {
 		$admin = self::factory()->user->create( array( 'role' => 'administrator' ) );
 		wp_set_current_user( $admin );
 
+		// add_submenu_page() expects the parent slug ('woocommerce') to already
+		// have at least one entry in $submenu, otherwise WP refuses to register
+		// the child. In real admin requests WC's own admin_menu hook seeds it;
+		// in PHPUnit (no admin context), seed it ourselves so the test is
+		// deterministic across local + CI environments.
+		if ( ! is_array( $submenu ) ) {
+			$submenu = array();
+		}
+		if ( empty( $submenu['woocommerce'] ) ) {
+			$submenu['woocommerce'] = array(
+				array( 'WooCommerce', 'manage_woocommerce', 'woocommerce' ),
+			);
+		}
+
 		$page = new SettingsPage( new SettingsRepository() );
 		$page->add_menu();
 

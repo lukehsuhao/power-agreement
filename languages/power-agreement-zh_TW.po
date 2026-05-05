@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Power Agreement 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-agreement\n"
-"POT-Creation-Date: 2026-05-05T05:46:23+00:00\n"
+"POT-Creation-Date: 2026-05-05T06:46:11+00:00\n"
 "PO-Revision-Date: 2026-05-05 00:00+0800\n"
 "Last-Translator: Power Agreement Team\n"
 "Language-Team: 繁體中文 <zh_TW@li.org>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "X-Domain: power-agreement\n"
 
 #. Plugin Name of the plugin
-#: power-agreement.php:3 src/Settings/SettingsPage.php:39
-#: src/Settings/SettingsPage.php:40 assets/build/index.js:1
+#: power-agreement.php:3 src/Settings/SettingsPage.php:41
+#: src/Settings/SettingsPage.php:42 assets/build/index.js:1
 msgid "Power Agreement"
 msgstr "Power Agreement 結帳合約"
 
@@ -57,25 +57,25 @@ msgstr ""
 msgid "Power Agreement is not active:"
 msgstr "Power Agreement 未啟用："
 
-#: src/Checkout/BlockCheckout.php:202
+#: src/Checkout/BlockCheckout.php:204
 msgid "Whether the customer has accepted the agreement."
 msgstr "客戶是否已同意合約。"
 
 #. Translators: aria-label on the scrollable preview that opens a modal on click.
-#: src/Checkout/ClassicCheckout.php:153
+#: src/Checkout/ClassicCheckout.php:155
 #, php-format
 msgid "Open %s in full-size view"
 msgstr "放大檢視 %s"
 
-#: src/Checkout/ClassicCheckout.php:154 assets/build/index.js:1
+#: src/Checkout/ClassicCheckout.php:156 assets/build/index.js:1
 msgid "Click to enlarge"
 msgstr "點擊放大"
 
-#: src/Checkout/ClassicCheckout.php:194 assets/build/index.js:1
+#: src/Checkout/ClassicCheckout.php:196 assets/build/index.js:1
 msgid "Close"
 msgstr "關閉"
 
-#: src/Checkout/ClassicCheckout.php:209 assets/build/index.js:1
+#: src/Checkout/ClassicCheckout.php:211 assets/build/index.js:1
 msgid "Confirm"
 msgstr "確認"
 
@@ -85,78 +85,78 @@ msgstr "確認"
 msgid "Please check \"%s\" to place your order."
 msgstr "請先勾選「%s」後再下單。"
 
-#: src/Order/OrderAdminDisplay.php:37 src/Order/OrderAdminDisplay.php:49
+#: src/Order/OrderAdminDisplay.php:39 src/Order/OrderAdminDisplay.php:51
 msgid "Agreement Consent"
 msgstr "合約同意紀錄"
 
-#: src/Order/OrderAdminDisplay.php:39
+#: src/Order/OrderAdminDisplay.php:41
 msgid "No agreement consent record on this order."
 msgstr "本訂單沒有合約同意紀錄。"
 
-#: src/Order/OrderAdminDisplay.php:52
+#: src/Order/OrderAdminDisplay.php:54
 msgid "Agreed at:"
 msgstr "同意時間："
 
-#: src/Order/OrderAdminDisplay.php:56
+#: src/Order/OrderAdminDisplay.php:58
 msgid "Customer IP:"
 msgstr "客戶 IP："
 
-#: src/Order/OrderAdminDisplay.php:60
+#: src/Order/OrderAdminDisplay.php:62
 msgid "SHA-256:"
 msgstr "SHA-256："
 
-#: src/Order/OrderAdminDisplay.php:65
+#: src/Order/OrderAdminDisplay.php:67
 msgid "View captured agreement HTML"
 msgstr "查看當下合約全文"
 
-#: src/Settings/SettingsPage.php:60
+#: src/Settings/SettingsPage.php:62
 msgid "Checkout Agreement"
 msgstr "結帳合約"
 
-#: src/Settings/SettingsPage.php:67
+#: src/Settings/SettingsPage.php:69
 msgid "Enable agreement on checkout"
 msgstr "啟用結帳合約"
 
-#: src/Settings/SettingsPage.php:75
+#: src/Settings/SettingsPage.php:77
 msgid "Section title"
 msgstr "區塊標題"
 
-#: src/Settings/SettingsPage.php:83
+#: src/Settings/SettingsPage.php:85
 msgid "Agreement body"
 msgstr "合約內容"
 
-#: src/Settings/SettingsPage.php:91
+#: src/Settings/SettingsPage.php:93
 msgid "Consent checkbox label"
 msgstr "同意勾選文字"
 
-#: src/Settings/SettingsPage.php:99
+#: src/Settings/SettingsPage.php:101
 msgid "Display mode"
 msgstr "顯示模式"
 
-#: src/Settings/SettingsPage.php:132
+#: src/Settings/SettingsPage.php:134
 msgid ""
 "Agreement is enabled but the body is empty — checkout will skip rendering "
 "until you add some content."
 msgstr "合約已啟用但內容為空，在補上內容前結帳頁不會顯示合約。"
 
-#: src/Settings/SettingsPage.php:149
+#: src/Settings/SettingsPage.php:151
 msgid ""
 "Configure the agreement that customers must accept before placing an order."
 msgstr "設定客戶必須同意才能下單的合約內容。"
 
-#: src/Settings/SettingsPage.php:159
+#: src/Settings/SettingsPage.php:161
 msgid "Show the agreement section on checkout and require consent."
 msgstr "在結帳頁顯示合約區塊並要求同意。"
 
-#: src/Settings/SettingsPage.php:203
+#: src/Settings/SettingsPage.php:205
 msgid "Inline scrolling preview (click to enlarge in modal)"
 msgstr "內嵌捲動預覽（點擊在彈窗中放大）"
 
-#: src/Settings/SettingsPage.php:204
+#: src/Settings/SettingsPage.php:206
 msgid "Accordion (collapsed by default)"
 msgstr "摺疊（預設收合）"
 
-#: src/Settings/SettingsPage.php:218
+#: src/Settings/SettingsPage.php:220
 msgid ""
 "Inline scroll keeps the agreement partially visible from the start; the "
 "customer can scroll to read or click the box to open a full-size modal. "

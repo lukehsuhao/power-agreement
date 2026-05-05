@@ -2,22 +2,22 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Power Agreement 0.1.0\n"
+"Project-Id-Version: Power Agreement 0.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-agreement\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-05-05T05:46:23+00:00\n"
+"POT-Creation-Date: 2026-05-05T06:46:11+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: power-agreement\n"
 
 #. Plugin Name of the plugin
 #: power-agreement.php:3
-#: src/Settings/SettingsPage.php:39
-#: src/Settings/SettingsPage.php:40
+#: src/Settings/SettingsPage.php:41
+#: src/Settings/SettingsPage.php:42
 #: assets/build/index.js:1
 msgid "Power Agreement"
 msgstr ""
@@ -50,27 +50,27 @@ msgstr ""
 msgid "Power Agreement is not active:"
 msgstr ""
 
-#: src/Checkout/BlockCheckout.php:202
+#: src/Checkout/BlockCheckout.php:204
 msgid "Whether the customer has accepted the agreement."
 msgstr ""
 
 #. Translators: aria-label on the scrollable preview that opens a modal on click.
-#: src/Checkout/ClassicCheckout.php:153
+#: src/Checkout/ClassicCheckout.php:155
 #, php-format
 msgid "Open %s in full-size view"
 msgstr ""
 
-#: src/Checkout/ClassicCheckout.php:154
+#: src/Checkout/ClassicCheckout.php:156
 #: assets/build/index.js:1
 msgid "Click to enlarge"
 msgstr ""
 
-#: src/Checkout/ClassicCheckout.php:194
+#: src/Checkout/ClassicCheckout.php:196
 #: assets/build/index.js:1
 msgid "Close"
 msgstr ""
 
-#: src/Checkout/ClassicCheckout.php:209
+#: src/Checkout/ClassicCheckout.php:211
 #: assets/build/index.js:1
 msgid "Confirm"
 msgstr ""
@@ -81,76 +81,76 @@ msgstr ""
 msgid "Please check \"%s\" to place your order."
 msgstr ""
 
-#: src/Order/OrderAdminDisplay.php:37
-#: src/Order/OrderAdminDisplay.php:49
+#: src/Order/OrderAdminDisplay.php:39
+#: src/Order/OrderAdminDisplay.php:51
 msgid "Agreement Consent"
 msgstr ""
 
-#: src/Order/OrderAdminDisplay.php:39
+#: src/Order/OrderAdminDisplay.php:41
 msgid "No agreement consent record on this order."
 msgstr ""
 
-#: src/Order/OrderAdminDisplay.php:52
+#: src/Order/OrderAdminDisplay.php:54
 msgid "Agreed at:"
 msgstr ""
 
-#: src/Order/OrderAdminDisplay.php:56
+#: src/Order/OrderAdminDisplay.php:58
 msgid "Customer IP:"
 msgstr ""
 
-#: src/Order/OrderAdminDisplay.php:60
+#: src/Order/OrderAdminDisplay.php:62
 msgid "SHA-256:"
 msgstr ""
 
-#: src/Order/OrderAdminDisplay.php:65
+#: src/Order/OrderAdminDisplay.php:67
 msgid "View captured agreement HTML"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:60
+#: src/Settings/SettingsPage.php:62
 msgid "Checkout Agreement"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:67
+#: src/Settings/SettingsPage.php:69
 msgid "Enable agreement on checkout"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:75
+#: src/Settings/SettingsPage.php:77
 msgid "Section title"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:83
+#: src/Settings/SettingsPage.php:85
 msgid "Agreement body"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:91
+#: src/Settings/SettingsPage.php:93
 msgid "Consent checkbox label"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:99
+#: src/Settings/SettingsPage.php:101
 msgid "Display mode"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:132
+#: src/Settings/SettingsPage.php:134
 msgid "Agreement is enabled but the body is empty — checkout will skip rendering until you add some content."
 msgstr ""
 
-#: src/Settings/SettingsPage.php:149
+#: src/Settings/SettingsPage.php:151
 msgid "Configure the agreement that customers must accept before placing an order."
 msgstr ""
 
-#: src/Settings/SettingsPage.php:159
+#: src/Settings/SettingsPage.php:161
 msgid "Show the agreement section on checkout and require consent."
 msgstr ""
 
-#: src/Settings/SettingsPage.php:203
+#: src/Settings/SettingsPage.php:205
 msgid "Inline scrolling preview (click to enlarge in modal)"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:204
+#: src/Settings/SettingsPage.php:206
 msgid "Accordion (collapsed by default)"
 msgstr ""
 
-#: src/Settings/SettingsPage.php:218
+#: src/Settings/SettingsPage.php:220
 msgid "Inline scroll keeps the agreement partially visible from the start; the customer can scroll to read or click the box to open a full-size modal. Accordion is collapsed until clicked."
 msgstr ""
 

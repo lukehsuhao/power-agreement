@@ -80,6 +80,32 @@
 	margin-bottom: 0;
 }
 
+/* Inside the preview, flatten heading typography so the box reads
+ * like a single-flow excerpt. Headings stay bold (so structure is
+ * still discernible), but their font-size matches body text and
+ * vertical rhythm is tightened. The full-size modal keeps the
+ * original heading sizes — that's the "real" reading view. */
+.power-agreement__preview-body h1,
+.power-agreement__preview-body h2,
+.power-agreement__preview-body h3,
+.power-agreement__preview-body h4,
+.power-agreement__preview-body h5,
+.power-agreement__preview-body h6 {
+	font-size: 1em;
+	font-weight: 600;
+	line-height: 1.4;
+	margin: 0.6em 0 0.3em;
+	padding: 0;
+	color: inherit;
+}
+
+.power-agreement__preview-body p,
+.power-agreement__preview-body ul,
+.power-agreement__preview-body ol {
+	font-size: 1em;
+	margin: 0.4em 0;
+}
+
 .power-agreement__consent {
 	display: flex;
 	align-items: flex-start;

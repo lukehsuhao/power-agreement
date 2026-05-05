@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, consent, terms, gdpr
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.4.0
+Stable tag: 0.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,9 @@ No. The HTML is captured at the moment of order creation; old orders continue to
 No. Uninstall only removes the plugin's settings option. Order meta (the actual consent records) is preserved.
 
 == Changelog ==
+
+= 0.4.1 =
+* Modal consent text and checkbox are now visually larger (font-size 1.1em + checkbox 1.3em). The outer in-page consent stays at theme size — only the in-modal one was bumped to make the consent action clearly the primary gesture in the dialog.
 
 = 0.4.0 =
 * New admin setting: **Button colour** — a colour picker that styles the "Read agreement" and "Confirm" buttons. Defaults to dark grey (`#1f2937`); white text is always used on top, so dark colours give the best contrast. Hover state uses a CSS `filter: brightness(0.88)` so any picked colour gets a sensible darker shade automatically.

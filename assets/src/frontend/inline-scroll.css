@@ -225,11 +225,24 @@
 }
 
 /* Inner consent label inside the modal — same look as the outer one
- * but no top margin (it now lives in the footer row). */
+ * but no top margin (it now lives in the footer row), and larger
+ * type + checkbox so the consent action stands out as the primary
+ * gesture in the dialog. The outer (in-page) consent stays at its
+ * theme-inherited size. */
 .power-agreement__consent--inner {
 	margin: 0;
 	flex: 1 1 auto;
 	min-width: 0;
+	font-size: 1.1em;
+	gap: 0.7em;
+	align-items: center;
+}
+
+.power-agreement__consent--inner input[type="checkbox"] {
+	width: 1.3em;
+	height: 1.3em;
+	margin-top: 0;
+	cursor: pointer;
 }
 
 /* The confirm action — plugin-owned styling so the host theme's

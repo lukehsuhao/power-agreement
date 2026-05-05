@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] — 2026-05-05
+
+### Fixed
+
+- **Custom-layout compatibility.** On stock Classic Checkout the agreement renders directly above `#place_order` because `woocommerce_review_order_before_submit` (the canonical "before-submit" hook, also used by WooCommerce's built-in *Terms and conditions*) puts it there. But on a custom checkout — Elementor Pro's Checkout widget, Flexible Checkout Fields, FunnelKit, theme template overrides, etc. — the place-order button is often moved hundreds of pixels away from where the hook fires. Result: our wrapper appeared above the order summary, far from the actual submit button the customer clicks.
+
+  Added a small `relocate.js` that runs after the page loads and after every `updated_checkout` ajax fragment refresh. It finds the form's actual submit button (preferring `[name="woocommerce_checkout_place_order"]` / `#place_order`, falling back to the last `<button|input type="submit">` in the form excluding our own modal's controls) and reinserts the wrapper as the immediate previous sibling of that button's row. A debounced MutationObserver covers themes that disable WC's standard ajax flow entirely.
+
+  Idempotent — it short-circuits when the wrapper is already adjacent to the submit, so stock layouts see no behavioural change.
+
+  Discovered while pairing with a merchant whose Elementor-built checkout placed the order summary on top of the page and the billing fields plus submit button at the bottom.
+
 ## [0.3.0] — 2026-05-05
 
 ### Added

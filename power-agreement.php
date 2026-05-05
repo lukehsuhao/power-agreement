@@ -3,7 +3,7 @@
  * Plugin Name: Power Agreement
  * Plugin URI: https://github.com/zenbuapps/power-agreement
  * Description: Adds a configurable agreement consent block to WooCommerce checkout (Classic + Block) and stores a per-order snapshot for legal evidence.
- * Version: 0.3.0
+ * Version: 0.3.1
  * Requires at least: 6.5
  * Requires PHP: 8.1
  * WC requires at least: 8.3

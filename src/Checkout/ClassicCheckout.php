@@ -83,6 +83,22 @@ final class ClassicCheckout {
 			$this->assetVersion( $js_path ),
 			true
 		);
+
+		// Always-load helper that detaches our wrapper from the standard
+		// `woocommerce_review_order_before_submit` injection point and
+		// reinserts it next to whichever button is the actual checkout
+		// submit. Required for custom layouts (Elementor Pro Checkout,
+		// Flexible Checkout Fields, FunnelKit, theme overrides) that move
+		// the place-order button out of `.form-row.place-order`. No-op
+		// on stock layouts because the wrapper is already in place.
+		$relocate_path = $root . 'assets/src/frontend/relocate.js';
+		wp_enqueue_script(
+			'power-agreement-relocate',
+			$base . 'assets/src/frontend/relocate.js',
+			array( 'power-agreement-frontend' ),
+			$this->assetVersion( $relocate_path ),
+			true
+		);
 	}
 
 	/**

@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Plugin {
 
-	private const VERSION = '0.3.0';
+	private const VERSION = '0.3.1';
 
 	private string $plugin_file;
 

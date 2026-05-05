@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, consent, terms, gdpr
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,9 @@ No. The HTML is captured at the moment of order creation; old orders continue to
 No. Uninstall only removes the plugin's settings option. Order meta (the actual consent records) is preserved.
 
 == Changelog ==
+
+= 0.3.2 =
+* Hardened the relocate helper for sites that render both `[woocommerce_cart]` and `[woocommerce_checkout]` shortcodes on the same page (or otherwise cause `woocommerce_review_order_before_submit` to fire twice). The script now (a) anchors strictly to `[name="woocommerce_checkout_place_order"]` instead of "the last submit anywhere in the page", so coupon / update-cart / search buttons are never picked, and (b) deduplicates duplicate `[data-power-agreement]` wrappers, keeping the one inside the same `<form>` as the actual place-order button.
 
 = 0.3.1 =
 * Compatibility fix for custom checkout layouts (Elementor Pro Checkout widget, Flexible Checkout Fields, FunnelKit, and theme template overrides). The agreement now relocates itself to sit immediately above whichever button is the actual submit button, even if that button has been moved out of the standard `.form-row.place-order` slot.

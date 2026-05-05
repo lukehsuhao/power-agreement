@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] — 2026-05-05
+
+### Fixed
+
+- **Relocate helper now picks the right button on cart-on-checkout pages.**
+  The 0.3.1 helper used a "last `<button|input type=\"submit\">` in the form" fallback to find the place-order button. On pages that render both the cart shortcode AND the checkout shortcode (a common Elementor / FunnelKit pattern where the basket sits above the billing form), that fallback can land on the cart's "Apply coupon" / "Update cart" button instead. Switched to anchoring strictly on `[name="woocommerce_checkout_place_order"]` / `#place_order` — the canonical attribute WooCommerce gives the actual checkout submit, regardless of which form ends up wrapping it.
+
+- **Duplicate wrapper handling.** Doubled rendering of the order-review template (which `woocommerce_review_order_before_submit` lives in) leaves two `[data-power-agreement]` wrappers in the DOM with the same `id` attributes. The relocate helper now keeps one wrapper — preferring the one that's already inside the same `<form>` as the place-order button — and removes the duplicate so the consent checkbox stops cloning itself.
+
+Discovered when verifying 0.3.1 on the same merchant site that drove the 0.3.1 fix.
+
 ## [0.3.1] — 2026-05-05
 
 ### Fixed

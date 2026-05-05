@@ -25,11 +25,26 @@ final class SettingsRepository {
 
 	public const OPTION = 'power_agreement_settings';
 
+	public const DISPLAY_MODE_ACCORDION     = 'accordion';
+	public const DISPLAY_MODE_INLINE_SCROLL = 'inline_scroll';
+
+	/**
+	 * Allowed values for the display_mode setting.
+	 *
+	 * @return list<string>
+	 */
+	public static function displayModes(): array {
+		return array(
+			self::DISPLAY_MODE_INLINE_SCROLL,
+			self::DISPLAY_MODE_ACCORDION,
+		);
+	}
+
 	private const TITLE_MAX_LEN        = 100;
 	private const CONSENT_TEXT_MAX_LEN = 200;
 
 	/**
-	 * @return array{enabled: bool, title: string, content: string, consent_text: string}
+	 * @return array{enabled: bool, title: string, content: string, consent_text: string, display_mode: string}
 	 */
 	public static function defaults(): array {
 		return array(
@@ -37,11 +52,12 @@ final class SettingsRepository {
 			'title'        => __( 'Agreement', 'power-agreement' ),
 			'content'      => '',
 			'consent_text' => __( 'I have read and agree to the agreement above.', 'power-agreement' ),
+			'display_mode' => self::DISPLAY_MODE_INLINE_SCROLL,
 		);
 	}
 
 	/**
-	 * @return array{enabled: bool, title: string, content: string, consent_text: string}
+	 * @return array{enabled: bool, title: string, content: string, consent_text: string, display_mode: string}
 	 */
 	public function settings(): array {
 		$stored = get_option( self::OPTION, array() );
@@ -55,6 +71,7 @@ final class SettingsRepository {
 		$merged['title']        = (string) $merged['title'];
 		$merged['content']      = (string) $merged['content'];
 		$merged['consent_text'] = (string) $merged['consent_text'];
+		$merged['display_mode'] = self::normaliseDisplayMode( (string) $merged['display_mode'] );
 
 		return $merged;
 	}
@@ -75,6 +92,10 @@ final class SettingsRepository {
 		return $this->settings()['consent_text'];
 	}
 
+	public function displayMode(): string {
+		return $this->settings()['display_mode'];
+	}
+
 	/**
 	 * Persist a sanitised payload.
 	 *
@@ -91,7 +112,7 @@ final class SettingsRepository {
 	 * Apply field-by-field cleansing rules.
 	 *
 	 * @param array<string, mixed> $raw
-	 * @return array{enabled: bool, title: string, content: string, consent_text: string}
+	 * @return array{enabled: bool, title: string, content: string, consent_text: string, display_mode: string}
 	 */
 	public function sanitize( array $raw ): array {
 		$defaults = self::defaults();
@@ -114,12 +135,27 @@ final class SettingsRepository {
 			: $defaults['consent_text'];
 		$consent_text = mb_substr( $consent_text, 0, self::CONSENT_TEXT_MAX_LEN );
 
+		$display_mode = array_key_exists( 'display_mode', $raw )
+			? self::normaliseDisplayMode( (string) $raw['display_mode'] )
+			: $defaults['display_mode'];
+
 		return array(
 			'enabled'      => $enabled,
 			'title'        => $title,
 			'content'      => $content,
 			'consent_text' => $consent_text,
+			'display_mode' => $display_mode,
 		);
+	}
+
+	/**
+	 * Reduce any value to a known display mode, defaulting to the inline-scroll
+	 * preview when the input does not match one of the allowed modes.
+	 */
+	private static function normaliseDisplayMode( string $mode ): string {
+		return in_array( $mode, self::displayModes(), true )
+			? $mode
+			: self::DISPLAY_MODE_INLINE_SCROLL;
 	}
 
 	/**

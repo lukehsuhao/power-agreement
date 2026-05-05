@@ -77,18 +77,58 @@ final class ClassicCheckoutTest extends WP_UnitTestCase {
 		);
 	}
 
-	public function test_render_outputs_accordion_when_enforced(): void {
+	public function test_render_outputs_inline_scroll_by_default(): void {
 		$this->enableAgreement( '<p>Read me carefully.</p>' );
 
 		ob_start();
 		$this->makeIntegration()->render();
 		$html = (string) ob_get_clean();
 
+		// Common contract elements (both modes)
 		self::assertStringContainsString( 'data-power-agreement', $html );
 		self::assertStringContainsString( 'Service Agreement', $html );
 		self::assertStringContainsString( 'Read me carefully.', $html );
 		self::assertStringContainsString( 'name="power_agreement_consent"', $html );
 		self::assertStringContainsString( 'I agree.', $html );
+
+		// Inline-scroll specific markers (default mode for new installs)
+		self::assertStringContainsString( 'power-agreement--inline-scroll', $html );
+		self::assertStringContainsString( 'data-power-agreement-open', $html );
+		self::assertStringContainsString( '<dialog', $html );
+		self::assertStringContainsString( 'data-power-agreement-modal', $html );
+		self::assertStringContainsString( 'role="button"', $html );
+	}
+
+	public function test_render_outputs_accordion_when_mode_is_accordion(): void {
+		$this->repo->save(
+			array(
+				'enabled'      => true,
+				'title'        => 'Service Agreement',
+				'content'      => '<p>Read me carefully.</p>',
+				'consent_text' => 'I agree.',
+				'display_mode' => SettingsRepository::DISPLAY_MODE_ACCORDION,
+			)
+		);
+
+		ob_start();
+		$this->makeIntegration()->render();
+		$html = (string) ob_get_clean();
+
+		// Common contract elements
+		self::assertStringContainsString( 'data-power-agreement', $html );
+		self::assertStringContainsString( 'Service Agreement', $html );
+		self::assertStringContainsString( 'Read me carefully.', $html );
+		self::assertStringContainsString( 'name="power_agreement_consent"', $html );
+		self::assertStringContainsString( 'I agree.', $html );
+
+		// Accordion-specific markers
+		self::assertStringContainsString( 'power-agreement--accordion', $html );
+		self::assertStringContainsString( 'data-power-agreement-toggle', $html );
+		self::assertStringContainsString( 'aria-expanded="false"', $html );
+
+		// Must NOT have inline-scroll / dialog markers
+		self::assertStringNotContainsString( 'power-agreement--inline-scroll', $html );
+		self::assertStringNotContainsString( '<dialog', $html );
 	}
 
 	public function test_render_outputs_nothing_when_disabled(): void {

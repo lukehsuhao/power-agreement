@@ -59,22 +59,26 @@ final class ClassicCheckout {
 			return;
 		}
 
-		$base    = defined( 'POWER_AGREEMENT_URL' ) ? POWER_AGREEMENT_URL : plugin_dir_url( dirname( __DIR__ ) );
-		$root    = defined( 'POWER_AGREEMENT_DIR' ) ? POWER_AGREEMENT_DIR : trailingslashit( dirname( __DIR__, 2 ) );
-		$css_ver = $this->assetVersion( $root . 'assets/src/frontend/accordion.css' );
-		$js_ver  = $this->assetVersion( $root . 'assets/src/frontend/accordion.js' );
+		$base = defined( 'POWER_AGREEMENT_URL' ) ? POWER_AGREEMENT_URL : plugin_dir_url( dirname( __DIR__ ) );
+		$root = defined( 'POWER_AGREEMENT_DIR' ) ? POWER_AGREEMENT_DIR : trailingslashit( dirname( __DIR__, 2 ) );
+
+		$mode = $this->repo->displayMode();
+		$slug = SettingsRepository::DISPLAY_MODE_INLINE_SCROLL === $mode ? 'inline-scroll' : 'accordion';
+
+		$css_path = $root . 'assets/src/frontend/' . $slug . '.css';
+		$js_path  = $root . 'assets/src/frontend/' . $slug . '.js';
 
 		wp_enqueue_style(
 			'power-agreement-frontend',
-			$base . 'assets/src/frontend/accordion.css',
+			$base . 'assets/src/frontend/' . $slug . '.css',
 			array(),
-			$css_ver
+			$this->assetVersion( $css_path )
 		);
 		wp_enqueue_script(
 			'power-agreement-frontend',
-			$base . 'assets/src/frontend/accordion.js',
+			$base . 'assets/src/frontend/' . $slug . '.js',
 			array(),
-			$js_ver,
+			$this->assetVersion( $js_path ),
 			true
 		);
 	}
@@ -101,12 +105,21 @@ final class ClassicCheckout {
 			return;
 		}
 
+		$mode = $this->repo->displayMode();
+		if ( SettingsRepository::DISPLAY_MODE_INLINE_SCROLL === $mode ) {
+			$this->renderInlineScroll();
+			return;
+		}
+		$this->renderAccordion();
+	}
+
+	private function renderAccordion(): void {
 		$title        = $this->repo->title();
 		$content      = $this->repo->content();
 		$consent_text = $this->repo->consentText();
 
 		?>
-		<div class="power-agreement" data-power-agreement>
+		<div class="power-agreement power-agreement--accordion" data-power-agreement>
 			<button type="button"
 				class="power-agreement__toggle"
 				aria-expanded="false"
@@ -127,6 +140,68 @@ final class ClassicCheckout {
 					value="1" />
 				<span><?php echo esc_html( $consent_text ); ?></span>
 			</label>
+		</div>
+		<?php
+	}
+
+	private function renderInlineScroll(): void {
+		$title        = $this->repo->title();
+		$content      = $this->repo->content();
+		$consent_text = $this->repo->consentText();
+
+		// Translators: aria-label on the scrollable preview that opens a modal on click.
+		$open_label  = sprintf( __( 'Open %s in full-size view', 'power-agreement' ), $title );
+		$expand_hint = __( 'Click to enlarge', 'power-agreement' );
+
+		?>
+		<div class="power-agreement power-agreement--inline-scroll" data-power-agreement>
+			<div class="power-agreement__preview"
+				role="button"
+				tabindex="0"
+				aria-haspopup="dialog"
+				aria-controls="power-agreement-modal"
+				aria-label="<?php echo esc_attr( $open_label ); ?>"
+				data-power-agreement-open>
+				<div class="power-agreement__preview-header">
+					<span class="power-agreement__title"><?php echo esc_html( $title ); ?></span>
+					<span class="power-agreement__expand-icon" aria-hidden="true">
+						<?php echo esc_html( $expand_hint ); ?> ⤢
+					</span>
+				</div>
+				<div class="power-agreement__preview-body">
+					<?php echo wp_kses_post( $content ); ?>
+				</div>
+			</div>
+			<label class="power-agreement__consent">
+				<input type="checkbox"
+					name="<?php echo esc_attr( self::FIELD_NAME ); ?>"
+					value="1" />
+				<span><?php echo esc_html( $consent_text ); ?></span>
+			</label>
+			<dialog id="power-agreement-modal"
+				class="power-agreement__modal"
+				data-power-agreement-modal
+				aria-labelledby="power-agreement-modal-title">
+				<div class="power-agreement__modal-header">
+					<h2 id="power-agreement-modal-title" class="power-agreement__modal-title">
+						<?php echo esc_html( $title ); ?>
+					</h2>
+					<button type="button"
+						class="power-agreement__modal-close"
+						data-power-agreement-close
+						aria-label="<?php esc_attr_e( 'Close', 'power-agreement' ); ?>">×</button>
+				</div>
+				<div class="power-agreement__modal-body">
+					<?php echo wp_kses_post( $content ); ?>
+				</div>
+				<div class="power-agreement__modal-footer">
+					<button type="button"
+						class="power-agreement__modal-close button"
+						data-power-agreement-close>
+						<?php esc_html_e( 'Close', 'power-agreement' ); ?>
+					</button>
+				</div>
+			</dialog>
 		</div>
 		<?php
 	}

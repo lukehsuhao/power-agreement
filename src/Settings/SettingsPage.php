@@ -93,11 +93,19 @@ final class SettingsPage {
 			self::MENU_SLUG,
 			self::SECTION_ID
 		);
+
+		add_settings_field(
+			'display_mode',
+			__( 'Display mode', 'power-agreement' ),
+			array( $this, 'field_display_mode' ),
+			self::MENU_SLUG,
+			self::SECTION_ID
+		);
 	}
 
 	/**
 	 * @param array<string, mixed> $raw
-	 * @return array{enabled: bool, title: string, content: string, consent_text: string}
+	 * @return array{enabled: bool, title: string, content: string, consent_text: string, display_mode: string}
 	 */
 	public function sanitize( array $raw ): array {
 		return $this->repo->sanitize( $raw );
@@ -185,6 +193,31 @@ final class SettingsPage {
 		$name  = SettingsRepository::OPTION . '[consent_text]';
 		?>
 		<input type="text" class="regular-text" name="<?php echo esc_attr( $name ); ?>" value="<?php echo esc_attr( $value ); ?>" maxlength="200" />
+		<?php
+	}
+
+	public function field_display_mode(): void {
+		$current = $this->repo->displayMode();
+		$name    = SettingsRepository::OPTION . '[display_mode]';
+		$labels  = array(
+			SettingsRepository::DISPLAY_MODE_INLINE_SCROLL => __( 'Inline scrolling preview (click to enlarge in modal)', 'power-agreement' ),
+			SettingsRepository::DISPLAY_MODE_ACCORDION     => __( 'Accordion (collapsed by default)', 'power-agreement' ),
+		);
+		?>
+		<fieldset>
+			<?php foreach ( SettingsRepository::displayModes() as $mode ) : ?>
+				<label style="display:block; margin-bottom: 6px;">
+					<input type="radio"
+						name="<?php echo esc_attr( $name ); ?>"
+						value="<?php echo esc_attr( $mode ); ?>"
+						<?php checked( $current, $mode ); ?> />
+					<?php echo esc_html( $labels[ $mode ] ?? $mode ); ?>
+				</label>
+			<?php endforeach; ?>
+			<p class="description">
+				<?php esc_html_e( 'Inline scroll keeps the agreement partially visible from the start; the customer can scroll to read or click the box to open a full-size modal. Accordion is collapsed until clicked.', 'power-agreement' ); ?>
+			</p>
+		</fieldset>
 		<?php
 	}
 }

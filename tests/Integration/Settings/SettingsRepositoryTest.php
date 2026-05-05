@@ -135,4 +135,56 @@ final class SettingsRepositoryTest extends WP_UnitTestCase {
 		self::assertSame( SettingsRepository::defaults()['title'], $settings['title'] );
 		self::assertSame( '', $settings['content'] );
 	}
+
+	public function test_default_display_mode_is_inline_scroll(): void {
+		self::assertSame(
+			SettingsRepository::DISPLAY_MODE_INLINE_SCROLL,
+			$this->repo->displayMode()
+		);
+	}
+
+	public function test_save_persists_display_mode_choice(): void {
+		$this->repo->save(
+			array(
+				'enabled'      => true,
+				'display_mode' => SettingsRepository::DISPLAY_MODE_ACCORDION,
+			)
+		);
+		self::assertSame(
+			SettingsRepository::DISPLAY_MODE_ACCORDION,
+			$this->repo->displayMode()
+		);
+	}
+
+	public function test_save_normalises_unknown_display_mode_to_inline_scroll(): void {
+		$this->repo->save(
+			array(
+				'enabled'      => true,
+				'display_mode' => 'something-the-future-might-add',
+			)
+		);
+		self::assertSame(
+			SettingsRepository::DISPLAY_MODE_INLINE_SCROLL,
+			$this->repo->displayMode()
+		);
+	}
+
+	public function test_legacy_payload_without_display_mode_falls_back_to_inline_scroll(): void {
+		// Pre-existing installs (before display_mode was added) won't have
+		// the field on disk. settings() must still return a valid mode.
+		update_option(
+			SettingsRepository::OPTION,
+			array(
+				'enabled'      => true,
+				'title'        => 'Old',
+				'content'      => '<p>Old content</p>',
+				'consent_text' => 'Old consent',
+			)
+		);
+
+		self::assertSame(
+			SettingsRepository::DISPLAY_MODE_INLINE_SCROLL,
+			$this->repo->displayMode()
+		);
+	}
 }

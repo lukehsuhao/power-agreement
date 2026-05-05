@@ -1,0 +1,174 @@
+/**
+ * Power Agreement — inline-scroll display mode.
+ *
+ * Renders a scrollable preview of the agreement (~240px tall) that the
+ * customer can read in place. Clicking the preview opens a native
+ * <dialog> with the full agreement at a comfortable reading width.
+ *
+ * Inherits theme typography / colours via `currentColor` and
+ * unspecified font-family so the component blends with any theme.
+ */
+
+.power-agreement.power-agreement--inline-scroll {
+	margin: 1em 0;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.power-agreement__preview {
+	display: block;
+	width: 100%;
+	max-height: 240px;
+	overflow-y: auto;
+	border: 1px solid currentColor;
+	border-color: rgba(0, 0, 0, 0.18);
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.85);
+	cursor: pointer;
+	text-align: left;
+	color: inherit;
+	font: inherit;
+	padding: 0;
+	transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.power-agreement__preview:hover,
+.power-agreement__preview:focus {
+	border-color: currentColor;
+	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+	outline: none;
+}
+
+.power-agreement__preview:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+.power-agreement__preview-header {
+	position: sticky;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1em;
+	padding: 0.6em 0.9em;
+	background: rgba(0, 0, 0, 0.04);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	font-weight: 600;
+	user-select: none;
+}
+
+.power-agreement__expand-icon {
+	font-size: 0.85em;
+	font-weight: 500;
+	opacity: 0.7;
+	white-space: nowrap;
+}
+
+.power-agreement__preview-body {
+	padding: 0.9em 1.2em 1em;
+}
+
+.power-agreement__preview-body > :first-child {
+	margin-top: 0;
+}
+
+.power-agreement__preview-body > :last-child {
+	margin-bottom: 0;
+}
+
+.power-agreement__consent {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.6em;
+	margin-top: 0.8em;
+	cursor: pointer;
+	line-height: 1.4;
+}
+
+.power-agreement__consent input[type="checkbox"] {
+	margin-top: 0.25em;
+	flex-shrink: 0;
+}
+
+/* ── Modal (native <dialog>) ────────────────────────────────────── */
+
+.power-agreement__modal {
+	border: none;
+	border-radius: 8px;
+	padding: 0;
+	max-width: min(640px, 92vw);
+	width: 100%;
+	max-height: 88vh;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+	color: inherit;
+	background: #fff;
+}
+
+.power-agreement__modal::backdrop {
+	background: rgba(0, 0, 0, 0.45);
+}
+
+.power-agreement__modal[open] {
+	display: flex;
+	flex-direction: column;
+}
+
+.power-agreement__modal-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1em;
+	padding: 0.9em 1.2em;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	background: rgba(0, 0, 0, 0.02);
+}
+
+.power-agreement__modal-title {
+	margin: 0;
+	font-size: 1.15em;
+	font-weight: 600;
+}
+
+.power-agreement__modal-close {
+	background: transparent;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	border-radius: 4px;
+	padding: 0.2em 0.6em;
+	font-size: 1.1em;
+	line-height: 1;
+	cursor: pointer;
+	color: inherit;
+}
+
+.power-agreement__modal-close:hover {
+	background: rgba(0, 0, 0, 0.06);
+}
+
+.power-agreement__modal-body {
+	padding: 1.2em 1.4em;
+	overflow-y: auto;
+	flex: 1 1 auto;
+	line-height: 1.6;
+}
+
+.power-agreement__modal-body > :first-child {
+	margin-top: 0;
+}
+
+.power-agreement__modal-body > :last-child {
+	margin-bottom: 0;
+}
+
+.power-agreement__modal-footer {
+	padding: 0.8em 1.2em;
+	border-top: 1px solid rgba(0, 0, 0, 0.08);
+	background: rgba(0, 0, 0, 0.02);
+	text-align: right;
+}
+
+.power-agreement__modal-footer .power-agreement__modal-close {
+	font-size: 1em;
+	padding: 0.45em 1em;
+	min-width: 5em;
+}

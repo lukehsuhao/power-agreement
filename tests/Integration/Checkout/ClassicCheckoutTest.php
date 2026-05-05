@@ -92,18 +92,20 @@ final class ClassicCheckoutTest extends WP_UnitTestCase {
 		self::assertStringContainsString( 'I agree.', $html );
 
 		// Inline-scroll specific markers (default mode for new installs):
-		// compact one-line card with an explicit "Expand to view" button
-		// that opens a <dialog> modal containing the full content.
+		// compact one-line card with an explicit "Expand to view" anchor
+		// (we use <a role="button"> rather than <button> because some
+		// checkout-customising plugins strip <button> elements; anchors
+		// survive the same filtering).
 		self::assertStringContainsString( 'power-agreement--inline-scroll', $html );
 		self::assertStringContainsString( 'power-agreement__compact-card', $html );
 		self::assertStringContainsString( 'power-agreement__expand-btn', $html );
 		self::assertStringContainsString( 'data-power-agreement-open', $html );
 		self::assertStringContainsString( '<dialog', $html );
 		self::assertStringContainsString( 'data-power-agreement-modal', $html );
+		self::assertStringContainsString( 'role="button"', $html );
 
 		// The 240px scrollable preview is gone — assert we don't render it.
 		self::assertStringNotContainsString( 'power-agreement__preview-body', $html );
-		self::assertStringNotContainsString( 'role="button"', $html );
 	}
 
 	public function test_render_outputs_accordion_when_mode_is_accordion(): void {

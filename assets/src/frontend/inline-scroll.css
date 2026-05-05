@@ -49,13 +49,21 @@
 	font: inherit;
 	font-weight: 600;
 	line-height: 1.2;
-	color: #ffffff;
+	color: #ffffff !important;
 	background-color: #1f2937;
 	border: 1px solid #1f2937;
 	border-radius: 6px;
 	cursor: pointer;
 	white-space: nowrap;
+	text-decoration: none;
 	transition: background-color 120ms ease, transform 80ms ease;
+}
+
+.power-agreement__expand-btn:visited,
+.power-agreement__expand-btn:active,
+.power-agreement__expand-btn:hover {
+	color: #ffffff !important;
+	text-decoration: none;
 }
 
 .power-agreement__expand-btn:hover {
@@ -166,11 +174,19 @@
 	font-size: 1.1em;
 	line-height: 1;
 	cursor: pointer;
-	color: inherit;
+	color: inherit !important;
 	padding: 0;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	text-decoration: none;
+}
+
+.power-agreement__modal-icon-close:visited,
+.power-agreement__modal-icon-close:active,
+.power-agreement__modal-icon-close:hover {
+	color: inherit !important;
+	text-decoration: none;
 }
 
 .power-agreement__modal-icon-close:hover {
@@ -237,14 +253,22 @@
 	font: inherit;
 	font-weight: 600;
 	line-height: 1.2;
-	color: #ffffff;
+	color: #ffffff !important;
 	background-color: #1f2937;
 	border: 1px solid #1f2937;
 	border-radius: 6px;
 	cursor: pointer;
 	white-space: nowrap;
+	text-decoration: none;
 	transition: background-color 120ms ease, border-color 120ms ease, transform 80ms ease;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.power-agreement__confirm-btn:visited,
+.power-agreement__confirm-btn:active,
+.power-agreement__confirm-btn:hover {
+	color: #ffffff !important;
+	text-decoration: none;
 }
 
 .power-agreement__confirm-btn:hover {

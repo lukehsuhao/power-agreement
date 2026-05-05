@@ -109,14 +109,31 @@
 		}
 	} );
 
-	// Keyboard activation (Enter / Space) for the role="button" preview.
+	// Keyboard activation (Enter / Space) for the role="button" anchors.
+	// We use <a role="button"> instead of <button> because the latter is
+	// stripped by some checkout-customising plugins (Flexible Checkout
+	// Fields, Conditional Payments, certain caching layers) that
+	// over-aggressively sanitise the order-review HTML. Anchors survive
+	// that filtering. <a> handles Enter natively but not Space, and we
+	// also need preventDefault so href="#" doesn't jump the page.
 	document.addEventListener( 'keydown', function ( event ) {
 		if ( event.key !== 'Enter' && event.key !== ' ' ) {
 			return;
 		}
-		var trigger = event.target && event.target.closest
-			? event.target.closest( '[data-power-agreement-open]' )
-			: null;
+		var target = event.target;
+		if ( ! target || ! target.closest ) {
+			return;
+		}
+
+		var closeTrigger = target.closest( '[data-power-agreement-close]' );
+		if ( closeTrigger ) {
+			event.preventDefault();
+			var dlgClose = closeTrigger.closest( '[data-power-agreement-modal]' );
+			close( dlgClose );
+			return;
+		}
+
+		var trigger = target.closest( '[data-power-agreement-open]' );
 		if ( ! trigger ) {
 			return;
 		}

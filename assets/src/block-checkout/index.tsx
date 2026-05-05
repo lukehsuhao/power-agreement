@@ -139,15 +139,18 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 		<div className="power-agreement power-agreement--inline-scroll wp-block-power-agreement" data-power-agreement>
 			<div className="power-agreement__compact-card">
 				<span className="power-agreement__title">{settings.title}</span>
-				<button
-					type="button"
+				<a
+					href="#power-agreement-modal"
+					role="button"
+					tabIndex={0}
 					className="power-agreement__expand-btn"
 					aria-haspopup="dialog"
-					onClick={openDialog}
+					onClick={(e) => { e.preventDefault(); openDialog(); }}
+					onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDialog(); } }}
 					data-power-agreement-open
 				>
 					{expandLabel}
-				</button>
+				</a>
 			</div>
 			<ConsentLabel consent={consent} setConsent={setConsent} text={settings.consent_text} />
 			<dialog
@@ -160,14 +163,17 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 					<h2 id="power-agreement-modal-title" className="power-agreement__modal-title">
 						{settings.title}
 					</h2>
-					<button
-						type="button"
+					<a
+						href="#"
+						role="button"
+						tabIndex={0}
 						className="power-agreement__modal-icon-close"
 						aria-label={closeAriaLabel}
-						onClick={closeDialog}
+						onClick={(e) => { e.preventDefault(); closeDialog(); }}
+						onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeDialog(); } }}
 					>
 						×
-					</button>
+					</a>
 				</div>
 				<div
 					className="power-agreement__modal-body"
@@ -182,13 +188,16 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 						/>
 						<span>{settings.consent_text}</span>
 					</label>
-					<button
-						type="button"
+					<a
+						href="#"
+						role="button"
+						tabIndex={0}
 						className="power-agreement__confirm-btn"
-						onClick={closeDialog}
+						onClick={(e) => { e.preventDefault(); closeDialog(); }}
+						onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeDialog(); } }}
 					>
 						{confirmLabel}
-					</button>
+					</a>
 				</div>
 			</dialog>
 		</div>

@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.3] — 2026-05-05
+
+### Fixed
+
+- **`<button>` elements stripped on heavily-customised checkouts.** A merchant site using Flexible Checkout Fields + Conditional Payments + WP Rocket reported that the `Expand to view` action and the modal's close / confirm buttons silently disappeared from the rendered DOM, while the surrounding markup (and the form's `#place_order` submit button) survived. The agreement modal became unreachable.
+
+  Root cause: at least one of those plugins runs the order-review HTML through a sanitiser that allows form-submitting controls (`<input>`, `<button name="woocommerce_checkout_place_order">`) but strips other `<button>` elements as "untrusted". The exact culprit isn't relevant — the same pattern shows up on a long tail of WooCommerce sites with custom checkout pipelines.
+
+  Fix: replace the `<button>` elements with `<a href="…" role="button" tabindex="0">` — the standard WAI-ARIA pattern for non-form-submit "buttons". Anchors aren't form controls, so the same sanitisers leave them alone. Click handlers `preventDefault()` on the synthetic anchor, keyboard handlers cover Enter (native to anchors) and Space (added explicitly). Visual result is identical for end users.
+
+  Applies to both the Classic Checkout PHP render and the Block Checkout React component. Tests updated to assert the new markup includes `role="button"` and that `power-agreement__expand-btn` survives.
+
 ## [0.3.2] — 2026-05-05
 
 ### Fixed

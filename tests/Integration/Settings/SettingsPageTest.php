@@ -50,15 +50,17 @@ final class SettingsPageTest extends WP_UnitTestCase {
 	public function test_add_menu_registers_submenu_under_woocommerce(): void {
 		global $submenu;
 
-		// Prerequisite: simulate an admin user so add_submenu_page() actually registers.
+		// add_submenu_page() refuses to attach if (1) the current user lacks
+		// the capability or (2) the parent slug isn't already in $submenu.
+		// In a fresh PHPUnit run neither precondition is automatic, so we
+		// arrange both explicitly. Grant manage_woocommerce directly rather
+		// than relying on the role-cap mapping (WC populates that during its
+		// install on first admin request, not during PHPUnit bootstrap).
 		$admin = self::factory()->user->create( array( 'role' => 'administrator' ) );
+		$user  = get_user_by( 'id', $admin );
+		$user->add_cap( 'manage_woocommerce' );
 		wp_set_current_user( $admin );
 
-		// add_submenu_page() expects the parent slug ('woocommerce') to already
-		// have at least one entry in $submenu, otherwise WP refuses to register
-		// the child. In real admin requests WC's own admin_menu hook seeds it;
-		// in PHPUnit (no admin context), seed it ourselves so the test is
-		// deterministic across local + CI environments.
 		if ( ! is_array( $submenu ) ) {
 			$submenu = array();
 		}

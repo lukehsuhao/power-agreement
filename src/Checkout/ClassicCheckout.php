@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace PowerAgreement\Checkout;
 
+defined( 'ABSPATH' ) || exit;
+
 use PowerAgreement\Order\OrderMetaWriter;
 use PowerAgreement\Settings\SettingsRepository;
 use WC_Order;
@@ -218,9 +220,12 @@ final class ClassicCheckout {
 		if ( ! $this->validator->shouldEnforce() ) {
 			return;
 		}
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WC checkout itself.
-		$consent = isset( $_POST[ self::FIELD_NAME ] ) ? wp_unslash( $_POST[ self::FIELD_NAME ] ) : '';
-		if ( '1' !== (string) $consent ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Nonce is verified by WC checkout itself before this hook fires.
+		$consent = isset( $_POST[ self::FIELD_NAME ] )
+			? sanitize_text_field( wp_unslash( (string) $_POST[ self::FIELD_NAME ] ) )
+			: '';
+		// phpcs:enable WordPress.Security.NonceVerification.Missing
+		if ( '1' !== $consent ) {
 			wc_add_notice( $this->validator->errorMessage(), 'error' );
 		}
 	}

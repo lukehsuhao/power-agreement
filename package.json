@@ -1,6 +1,6 @@
 {
   "name": "power-agreement",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "WooCommerce checkout agreement consent plugin.",
   "license": "GPL-2.0-or-later",

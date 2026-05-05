@@ -59,8 +59,20 @@ jobs:
           cache: npm
       - name: npm ci
         run: npm ci
-      - name: Boot wp-env
-        run: npm run wp-env:start
+      # wp-env downloads WordPress + WooCommerce zips from wp.org during
+      # `start`, which periodically returns HTTP 429 from CI runners on
+      # busy days. Retry the boot step a few times before giving up.
+      - name: Boot wp-env (with retry)
+        run: |
+          for attempt in 1 2 3; do
+            if npm run wp-env:start; then
+              echo "wp-env started on attempt $attempt"
+              break
+            fi
+            echo "wp-env start attempt $attempt failed; retrying in $((attempt * 30))s"
+            npm run wp-env:destroy || true
+            sleep $((attempt * 30))
+          done
       - name: Wait for wp-env
         run: |
           for i in {1..30}; do
@@ -92,8 +104,17 @@ jobs:
       - run: npm ci
       - name: Build block bundle
         run: npm run build
-      - name: Boot wp-env
-        run: npm run wp-env:start
+      - name: Boot wp-env (with retry)
+        run: |
+          for attempt in 1 2 3; do
+            if npm run wp-env:start; then
+              echo "wp-env started on attempt $attempt"
+              break
+            fi
+            echo "wp-env start attempt $attempt failed; retrying in $((attempt * 30))s"
+            npm run wp-env:destroy || true
+            sleep $((attempt * 30))
+          done
       - name: Wait for wp-env
         run: |
           for i in {1..30}; do
@@ -120,12 +141,22 @@ jobs:
         with:
           php-version: '8.1'
           tools: composer:v2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
       - run: composer install --no-interaction --no-progress --prefer-dist
+      - run: npm ci
+      # The committed .pot is generated from PHP source + the production
+      # JS bundle (because wp-cli's make-pot does not parse .tsx). Build
+      # first so CI sees the same input set as the local generator.
+      - name: Build block bundle
+        run: npm run build
       - name: Regenerate .pot
         run: |
           ./vendor/bin/wp i18n make-pot . languages/power-agreement.pot.new \
             --slug=power-agreement --domain=power-agreement \
-            --exclude=node_modules,vendor,tests,assets/build,specs,test-results \
+            --exclude=node_modules,vendor,tests,specs,test-results,assets/src \
             --skip-audit
       - name: Diff against committed .pot
         run: |

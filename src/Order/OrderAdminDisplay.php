@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace PowerAgreement\Order;
 
+defined( 'ABSPATH' ) || exit;
+
 use WC_Order;
 
 /**

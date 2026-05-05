@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace PowerAgreement\Checkout;
 
+defined( 'ABSPATH' ) || exit;
+
 use Automattic\WooCommerce\Blocks\Integrations\IntegrationInterface;
 use Automattic\WooCommerce\Blocks\Package as BlocksPackage;
 use Automattic\WooCommerce\StoreApi\Exceptions\RouteException;

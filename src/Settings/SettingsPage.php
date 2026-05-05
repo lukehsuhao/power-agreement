@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace PowerAgreement\Settings;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Renders the WooCommerce → Power Agreement admin page.
  *

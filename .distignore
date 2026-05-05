@@ -1,0 +1,46 @@
+# Files / folders excluded from the production zip when running
+# `wp dist-archive` or wp.org's release packaging. Keeps the
+# distributable plugin small and free of dev-only tooling.
+
+# Hidden files / dirs
+/.git
+/.github
+/.gitignore
+/.distignore
+/.wp-env.json
+/.phpunit.cache
+/.phpunit.result.cache
+/.phpstan.cache
+/.phpcs-cache
+/.editorconfig
+/.idea
+/.vscode
+/.playwright-mcp
+
+# Dev tooling configs
+/composer.lock
+/package.json
+/package-lock.json
+/webpack.config.js
+/playwright.config.ts
+/phpunit.xml.dist
+/phpstan.neon.dist
+/phpcs.xml.dist
+
+# Source (we ship the built bundle in assets/build/)
+/assets/src
+
+# Tests / specs / docs / build artefacts
+/tests
+/specs
+/test-results
+/docs
+/node_modules
+/coverage
+/playwright-report
+
+# Misc
+/CHANGELOG.md
+/README.md
+*.log
+.DS_Store

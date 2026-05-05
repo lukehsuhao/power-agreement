@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace PowerAgreement;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Central registrar for all hooks.
  *
@@ -21,7 +23,7 @@ namespace PowerAgreement;
  */
 final class Plugin {
 
-	private const VERSION = '0.1.0';
+	private const VERSION = '0.2.0';
 
 	private string $plugin_file;
 

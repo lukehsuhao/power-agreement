@@ -151,28 +151,19 @@ final class ClassicCheckout {
 		$content      = $this->repo->content();
 		$consent_text = $this->repo->consentText();
 
-		// Translators: aria-label on the scrollable preview that opens a modal on click.
-		$open_label  = sprintf( __( 'Open %s in full-size view', 'power-agreement' ), $title );
-		$expand_hint = __( 'Click to enlarge', 'power-agreement' );
+		$expand_label = __( 'Expand to view', 'power-agreement' );
 
 		?>
 		<div class="power-agreement power-agreement--inline-scroll" data-power-agreement>
-			<div class="power-agreement__preview"
-				role="button"
-				tabindex="0"
-				aria-haspopup="dialog"
-				aria-controls="power-agreement-modal"
-				aria-label="<?php echo esc_attr( $open_label ); ?>"
-				data-power-agreement-open>
-				<div class="power-agreement__preview-header">
-					<span class="power-agreement__title"><?php echo esc_html( $title ); ?></span>
-					<span class="power-agreement__expand-icon" aria-hidden="true">
-						<?php echo esc_html( $expand_hint ); ?> ⤢
-					</span>
-				</div>
-				<div class="power-agreement__preview-body">
-					<?php echo wp_kses_post( $content ); ?>
-				</div>
+			<div class="power-agreement__compact-card">
+				<span class="power-agreement__title"><?php echo esc_html( $title ); ?></span>
+				<button type="button"
+					class="power-agreement__expand-btn"
+					aria-haspopup="dialog"
+					aria-controls="power-agreement-modal"
+					data-power-agreement-open>
+					<?php echo esc_html( $expand_label ); ?>
+				</button>
 			</div>
 			<label class="power-agreement__consent">
 				<input type="checkbox"

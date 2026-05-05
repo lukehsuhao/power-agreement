@@ -18,66 +18,58 @@
 	line-height: inherit;
 }
 
-.power-agreement__preview {
-	display: block;
-	width: 100%;
-	max-height: 240px;
-	overflow-y: auto;
-	border: 1px solid currentColor;
-	border-color: rgba(0, 0, 0, 0.18);
-	border-radius: 4px;
-	background: rgba(255, 255, 255, 0.85);
-	cursor: pointer;
-	text-align: left;
-	color: inherit;
-	font: inherit;
-	padding: 0;
-	transition: border-color 120ms ease, box-shadow 120ms ease;
-}
-
-.power-agreement__preview:hover,
-.power-agreement__preview:focus {
-	border-color: currentColor;
-	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
-	outline: none;
-}
-
-.power-agreement__preview:focus-visible {
-	outline: 2px solid currentColor;
-	outline-offset: 2px;
-}
-
-.power-agreement__preview-header {
-	position: sticky;
-	top: 0;
+/* Compact one-row card: title on the left, "Expand to view" button on
+ * the right. The full agreement text lives only in the modal — the
+ * checkout page itself stays uncluttered. */
+.power-agreement__compact-card {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: 1em;
-	padding: 0.6em 0.9em;
-	background: rgba(0, 0, 0, 0.04);
-	border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+	gap: 0.8em;
+	padding: 0.65em 0.9em;
+	border: 1px solid rgba(0, 0, 0, 0.18);
+	border-radius: 6px;
+	background: rgba(0, 0, 0, 0.02);
 	font-weight: 600;
-	user-select: none;
+	flex-wrap: wrap;
 }
 
-.power-agreement__expand-icon {
-	font-size: 0.85em;
-	font-weight: 500;
-	opacity: 0.7;
+.power-agreement__compact-card .power-agreement__title {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.power-agreement__expand-btn {
+	-webkit-appearance: none;
+	appearance: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.4em 1em;
+	font: inherit;
+	font-weight: 600;
+	line-height: 1.2;
+	color: #ffffff;
+	background-color: #1f2937;
+	border: 1px solid #1f2937;
+	border-radius: 6px;
+	cursor: pointer;
 	white-space: nowrap;
+	transition: background-color 120ms ease, transform 80ms ease;
 }
 
-.power-agreement__preview-body {
-	padding: 0.9em 1.2em 1em;
+.power-agreement__expand-btn:hover {
+	background-color: #111827;
+	border-color: #111827;
 }
 
-.power-agreement__preview-body > :first-child {
-	margin-top: 0;
+.power-agreement__expand-btn:active {
+	transform: translateY(1px);
 }
 
-.power-agreement__preview-body > :last-child {
-	margin-bottom: 0;
+.power-agreement__expand-btn:focus-visible {
+	outline: 2px solid #111827;
+	outline-offset: 2px;
 }
 
 /* Inside the preview, flatten heading typography so the box reads

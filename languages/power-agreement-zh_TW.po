@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Power Agreement 0.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/power-agreement\n"
-"POT-Creation-Date: 2026-05-05T06:46:11+00:00\n"
+"POT-Creation-Date: 2026-05-05T08:32:33+00:00\n"
 "PO-Revision-Date: 2026-05-05 00:00+0800\n"
 "Last-Translator: Power Agreement Team\n"
 "Language-Team: 繁體中文 <zh_TW@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 "Power Agreement：找不到 Composer 套件，請在外掛目錄執行 \"composer "
 "install\"。"
 
-#: power-agreement.php:92
+#: power-agreement.php:124
 msgid "Power Agreement is not active:"
 msgstr "Power Agreement 未啟用："
 
@@ -61,21 +61,15 @@ msgstr "Power Agreement 未啟用："
 msgid "Whether the customer has accepted the agreement."
 msgstr "客戶是否已同意合約。"
 
-#. Translators: aria-label on the scrollable preview that opens a modal on click.
-#: src/Checkout/ClassicCheckout.php:155
-#, php-format
-msgid "Open %s in full-size view"
-msgstr "放大檢視 %s"
+#: src/Checkout/ClassicCheckout.php:154 assets/build/index.js:1
+msgid "Expand to view"
+msgstr "全部展開"
 
-#: src/Checkout/ClassicCheckout.php:156 assets/build/index.js:1
-msgid "Click to enlarge"
-msgstr "點擊放大"
-
-#: src/Checkout/ClassicCheckout.php:196 assets/build/index.js:1
+#: src/Checkout/ClassicCheckout.php:187 assets/build/index.js:1
 msgid "Close"
 msgstr "關閉"
 
-#: src/Checkout/ClassicCheckout.php:211 assets/build/index.js:1
+#: src/Checkout/ClassicCheckout.php:202 assets/build/index.js:1
 msgid "Confirm"
 msgstr "確認"
 
@@ -173,10 +167,6 @@ msgstr "合約條款"
 msgid "I have read and agree to the agreement above."
 msgstr "我已閱讀並同意上述合約。"
 
-#: assets/build/index.js:1
-msgid "Open"
-msgstr "開啟"
-
 #: assets/build/block.json
 #, fuzzy
 msgctxt "block title"
@@ -214,3 +204,13 @@ msgstr "結帳"
 msgctxt "block keyword"
 msgid "terms"
 msgstr "條款"
+
+#, php-format
+#~ msgid "Open %s in full-size view"
+#~ msgstr "放大檢視 %s"
+
+#~ msgid "Click to enlarge"
+#~ msgstr "點擊放大"
+
+#~ msgid "Open"
+#~ msgstr "開啟"

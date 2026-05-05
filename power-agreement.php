@@ -3,7 +3,7 @@
  * Plugin Name: Power Agreement
  * Plugin URI: https://github.com/zenbuapps/power-agreement
  * Description: Adds a configurable agreement consent block to WooCommerce checkout (Classic + Block) and stores a per-order snapshot for legal evidence.
- * Version: 0.2.0
+ * Version: 0.3.0
  * Requires at least: 6.5
  * Requires PHP: 8.1
  * WC requires at least: 8.3
@@ -49,6 +49,38 @@ if ( ! file_exists( $power_agreement_autoload ) ) {
 	return;
 }
 require $power_agreement_autoload;
+
+// --- Self-hosted update checker (GitHub Releases) -------------------------
+//
+// We're not on wp.org, so WordPress's built-in update channel doesn't see us.
+// `yahnis-elsts/plugin-update-checker` polls a GitHub repo's Releases feed
+// and feeds matching releases into WordPress's normal "Plugins → Update"
+// flow. Trigger: when a new tag like vX.Y.Z is published with a
+// `power-agreement-X.Y.Z.zip` asset attached, every installed copy will
+// see the update prompt within the standard WP transient TTL (12h, or
+// immediately when the user visits the Plugins page after a manual
+// "Check Again" click).
+if ( class_exists( \YahnisElsts\PluginUpdateChecker\v5\PucFactory::class ) ) {
+	$power_agreement_update_checker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+		'https://github.com/lukehsuhao/power-agreement/',
+		POWER_AGREEMENT_FILE,
+		'power-agreement'
+	);
+	// `buildUpdateChecker` returns a Vcs\PluginUpdateChecker for GitHub URLs,
+	// which is a subclass that supports release-asset selection and branch
+	// pinning. PHPStan widens the return type to a union so we narrow it
+	// behind method_exists() checks (also defends against future signature
+	// changes in the library).
+	if ( method_exists( $power_agreement_update_checker, 'getVcsApi' ) ) {
+		$power_agreement_vcs_api = $power_agreement_update_checker->getVcsApi();
+		if ( is_object( $power_agreement_vcs_api ) && method_exists( $power_agreement_vcs_api, 'enableReleaseAssets' ) ) {
+			$power_agreement_vcs_api->enableReleaseAssets();
+		}
+	}
+	if ( method_exists( $power_agreement_update_checker, 'setBranch' ) ) {
+		$power_agreement_update_checker->setBranch( 'main' );
+	}
+}
 
 // --- Environment / version gating -----------------------------------------
 

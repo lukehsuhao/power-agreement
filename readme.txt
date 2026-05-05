@@ -4,7 +4,7 @@ Tags: woocommerce, checkout, consent, terms, gdpr
 Requires at least: 6.5
 Tested up to: 6.9
 Requires PHP: 8.1
-Stable tag: 0.2.0
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,6 +48,10 @@ No. The HTML is captured at the moment of order creation; old orders continue to
 No. Uninstall only removes the plugin's settings option. Order meta (the actual consent records) is preserved.
 
 == Changelog ==
+
+= 0.3.0 =
+* Replace the inline scrolling preview with a compact one-line card (title + "Expand to view" button); the full agreement now lives only inside the modal.
+* Add a self-hosted GitHub-Releases-based update mechanism: when a new tag with a power-agreement-X.Y.Z.zip asset is published, the standard "Plugins → Update" flow detects it.
 
 = 0.2.0 =
 * Add inline scrolling preview display mode (default for new installs); the agreement is partially visible from the start and clicking the box opens a full-size modal.

@@ -131,40 +131,23 @@ const InlineScrollView = ({ settings }: { settings: Settings }) => {
 		el.removeAttribute('open');
 	};
 
-	const onKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
-		if (event.key === 'Enter' || event.key === ' ') {
-			event.preventDefault();
-			openDialog();
-		}
-	};
-
-	const expandHint = __('Click to enlarge', 'power-agreement');
+	const expandLabel = __('Expand to view', 'power-agreement');
 	const closeAriaLabel = __('Close', 'power-agreement');
 	const confirmLabel = __('Confirm', 'power-agreement');
-	const ariaLabel = `${__('Open', 'power-agreement')} ${settings.title}`;
 
 	return (
 		<div className="power-agreement power-agreement--inline-scroll wp-block-power-agreement" data-power-agreement>
-			<div
-				className="power-agreement__preview"
-				role="button"
-				tabIndex={0}
-				aria-haspopup="dialog"
-				aria-label={ariaLabel}
-				onClick={openDialog}
-				onKeyDown={onKeyDown}
-				data-power-agreement-open
-			>
-				<div className="power-agreement__preview-header">
-					<span className="power-agreement__title">{settings.title}</span>
-					<span className="power-agreement__expand-icon" aria-hidden="true">
-						{expandHint} ⤢
-					</span>
-				</div>
-				<div
-					className="power-agreement__preview-body"
-					dangerouslySetInnerHTML={{ __html: settings.content }}
-				/>
+			<div className="power-agreement__compact-card">
+				<span className="power-agreement__title">{settings.title}</span>
+				<button
+					type="button"
+					className="power-agreement__expand-btn"
+					aria-haspopup="dialog"
+					onClick={openDialog}
+					data-power-agreement-open
+				>
+					{expandLabel}
+				</button>
 			</div>
 			<ConsentLabel consent={consent} setConsent={setConsent} text={settings.consent_text} />
 			<dialog

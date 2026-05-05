@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] — 2026-05-05
+
+### Added
+
+- **Self-hosted update mechanism via GitHub Releases.** The plugin now uses `yahnis-elsts/plugin-update-checker` to poll the project's GitHub Releases. When a new tag with a `power-agreement-X.Y.Z.zip` asset is published, every installed copy sees the prompt in the standard `Plugins → Update` page; clicking Update installs the new version through WordPress's normal update flow. No wp.org listing required.
+
+### Changed
+
+- **Inline-scroll mode is now a compact one-line card** (title on the left, "Expand to view" button on the right) instead of a 240 px scrollable preview. Customers can no longer scroll the agreement in place; the full text lives only inside the modal opened by the button. This was driven by user feedback that the scrollable preview "looked already-fully-expanded" and that they wanted "a small box, click 全部展開 to expand". The accordion mode is unchanged.
+- **Translation:** "全部展開" for the expand button (zh_TW).
+
+### Removed
+
+- The `power-agreement__preview-*` markup and its styles. The preview-body / preview-header / `role="button"` scaffolding is gone — replaced by `power-agreement__compact-card` + `power-agreement__expand-btn` (a real `<button>` element with native keyboard support, no synthetic `role`).
+
+### Notes
+
+- The `display_mode` setting still accepts `inline_scroll` and `accordion` — only the behaviour of `inline_scroll` changed; existing data needs no migration.
+- Hook unchanged: rendering still happens via `woocommerce_review_order_before_submit`, which is WooCommerce's canonical "directly before the place-order button" hook on Classic Checkout.
+
 ## [0.2.0] — 2026-05-05
 
 ### Added
